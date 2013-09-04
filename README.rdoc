@@ -1,1 +1,1 @@
-<strong>Mobile Zen:</strong> a fun side project that sends you an SMS a day with a question for reflection.
+Mobile Zen: a fun side project that sends you an SMS a day with a question for reflection.
