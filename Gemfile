@@ -13,6 +13,7 @@ gem 'httparty'
 gem 'twilio-ruby'
 gem 'unicorn'
 gem 'bootstrap-sass', :branch => '3'
+gem 'thin'
 # gem 'turbolinks'
 
 

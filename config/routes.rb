@@ -1,3 +1,5 @@
 MobileZen::Application.routes.draw do
-  root to: 'sms#index'
+  resources :text_messages
+
+  root to: 'text_messages#index'
 end
