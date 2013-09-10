@@ -1,6 +1,6 @@
 class TextMessagesController < ApplicationController
   before_action :set_text_message, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_twilio_client
   
   def index
     @text_messages = TextMessage.all
@@ -59,5 +59,9 @@ class TextMessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def text_message_params
       params.require(:text_message).permit(:phone_number, :text_body, :send_time)
+    end
+
+    def set_twilio_client
+      @client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
     end
 end

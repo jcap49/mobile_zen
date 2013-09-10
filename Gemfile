@@ -14,6 +14,7 @@ gem 'twilio-ruby'
 gem 'zurb-foundation'
 gem 'thin'
 gem 'figaro'
+gem 'whenever'
 # gem 'turbolinks'
 
 
