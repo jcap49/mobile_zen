@@ -23,6 +23,10 @@
 
 %body
   .row
+    -flash.each do |name, msg|
+      %div{ class: "flash #{name}" }
+        %p
+          =msg.html_safe
     = yield
 
   = javascript_include_tag "application"

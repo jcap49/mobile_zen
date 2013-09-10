@@ -1,0 +1,14 @@
+Spec for 9/15:
+----------
+-finish implementing landing view
+  -add error handling
+  -add color
+  -add logo (bonzai tree)
+-spec out markup for other views
+  -confirmation
+  -settings?
+  -about
+-start to sort out twilio integration
+  -add gem
+  -add keys
+  -read tutorial
