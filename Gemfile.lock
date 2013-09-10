@@ -45,6 +45,9 @@ GEM
     eventmachine (1.0.3)
     execjs (2.0.1)
     ffi (1.9.0)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     formatador (0.2.4)
     guard (1.8.2)
       formatador (>= 0.2.4)
@@ -187,6 +190,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   coffee-rails (~> 4.0.0)
+  figaro
   guard
   guard-bundler
   guard-rspec
