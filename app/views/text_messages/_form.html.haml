@@ -8,7 +8,7 @@
   .field
     = f.label :text_body
     = f.text_field :text_body
-  .field
+  .field#send_time.time.ui-timepicker-input
     = f.label :send_time
     = f.text_field :send_time
   .field
@@ -16,3 +16,5 @@
     = f.text_field :phone_number
   .actions
     = f.submit 'Submit'
+
+  
