@@ -1,28 +1,21 @@
 class TextMessagesController < ApplicationController
   before_action :set_text_message, only: [:show, :edit, :update, :destroy]
 
-  # GET /text_messages
-  # GET /text_messages.json
+  
   def index
     @text_messages = TextMessage.all
   end
 
-  # GET /text_messages/1
-  # GET /text_messages/1.json
   def show
   end
 
-  # GET /text_messages/new
   def new
     @text_message = TextMessage.new
   end
 
-  # GET /text_messages/1/edit
   def edit
   end
 
-  # POST /text_messages
-  # POST /text_messages.json
   def create
     @text_message = TextMessage.new(text_message_params)
 
@@ -37,8 +30,6 @@ class TextMessagesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /text_messages/1
-  # PATCH/PUT /text_messages/1.json
   def update
     respond_to do |format|
       if @text_message.update(text_message_params)
@@ -51,8 +42,6 @@ class TextMessagesController < ApplicationController
     end
   end
 
-  # DELETE /text_messages/1
-  # DELETE /text_messages/1.json
   def destroy
     @text_message.destroy
     respond_to do |format|
