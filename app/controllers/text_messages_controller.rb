@@ -58,6 +58,6 @@ class TextMessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def text_message_params
-      params[:text_message]
+      params.require(:text_message).permit(:phone_number, :text_body, :send_time)
     end
 end
