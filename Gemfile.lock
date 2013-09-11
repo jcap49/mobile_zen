@@ -31,7 +31,6 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     builder (3.1.4)
-    chronic (0.10.2)
     coderay (1.0.9)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
@@ -74,6 +73,12 @@ GEM
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
     i18n (0.6.5)
+    iron_core (1.0.1)
+      rest (>= 2.2.0)
+    iron_worker_ng (1.0.2)
+      bundler (>= 1.2.0)
+      iron_core (>= 1.0.0)
+      rubyzip (= 0.9.9)
     jbuilder (1.5.1)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
@@ -96,6 +101,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.7.9)
     multi_xml (0.5.4)
+    net-http-persistent (2.9)
     pg (0.16.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -130,6 +136,11 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest (2.6.3)
+      net-http-persistent
+      rest-client (>= 0.3.0)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -145,6 +156,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rubyzip (0.9.9)
     sass (3.2.10)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -182,9 +194,6 @@ GEM
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    whenever (0.8.4)
-      activesupport (>= 2.3.4)
-      chronic (>= 0.6.3)
     zurb-foundation (4.0.9)
       sass (>= 3.2.0)
 
@@ -200,6 +209,7 @@ DEPENDENCIES
   guard-rspec
   haml-rails
   httparty
+  iron_worker_ng
   jbuilder (~> 1.2)
   jquery-rails
   pg
@@ -212,5 +222,4 @@ DEPENDENCIES
   thin
   twilio-ruby
   uglifier (>= 1.3.0)
-  whenever
   zurb-foundation
