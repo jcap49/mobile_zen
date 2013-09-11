@@ -62,6 +62,6 @@ class TextMessagesController < ApplicationController
     end
 
     def set_twilio_client
-      @client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+      @client = Twilio::REST::Client.new(ENV["TEST_TWILIO_ACCOUNT_SID"], ENV["TEST_TWILIO_AUTH_TOKEN"])
     end
 end
