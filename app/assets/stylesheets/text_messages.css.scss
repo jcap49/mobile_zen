@@ -9,6 +9,16 @@
   text-align: center;
 }
 
+#landing_image {
+  margin-top: 5%;
+
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 #text_message_text_body {
   width: 30%;
 }
@@ -21,8 +31,13 @@
   width: 30%;
 }
 
-.landing_form {
-  margin-top: 20%;
+#disclaimer {
+  position: absolute;
+  bottom: 0;
+}
+
+#landing_form {
+  margin-top: 5%;
   // margin: auto;
   text-align: center;
 
