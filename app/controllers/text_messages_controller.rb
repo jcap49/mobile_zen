@@ -65,7 +65,6 @@ class TextMessagesController < ApplicationController
 
     def send_welcome_text_message(phone_number)
       set_twilio_client
-      binding.pry
       @client.account.sms.messages.create(
         from: TextMessage::TWILIO_PHONE_NUMBER,
         to: phone_number,
