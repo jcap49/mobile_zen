@@ -3,11 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-// landing
+// new
 
 .landing_header {
   text-align: center;
-  margin-top: 5%;
+  margin-top: 3%;
 }
 
 #landing_title {
@@ -24,10 +24,22 @@
   }
 }
 
+#slug {
+  width: 450px;
+}
+// #example_texts{
+//   text-align: left;
+//   margin-left: 36%;
+
+//   ul {
+//     list-style-type: none;
+//   }
+
+// }
+
 #info_prompt {
   margin-top: 3%;
   text-align: center;
-  color: #6f6f6f;
 }
 
 #text_message_text_body {
