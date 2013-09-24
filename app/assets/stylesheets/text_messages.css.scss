@@ -3,11 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-// new
+// new (landing page)
 
 .landing_header {
   text-align: center;
   margin-top: 3%;
+  margin-bottom: 3%;
+  position: relative;
+
 }
 
 #landing_title {
@@ -21,11 +24,12 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 80px;
   }
 }
 
 #slug {
-  width: 450px;
+  width: 350px;
 }
 // #example_texts{
 //   text-align: left;
@@ -36,6 +40,11 @@
 //   }
 
 // }
+
+#slug_description {
+  position: absolute;
+  margin: auto;
+}
 
 #info_prompt {
   margin-top: 3%;
