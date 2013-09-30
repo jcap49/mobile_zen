@@ -1,13 +1,17 @@
 runtime "ruby"
 
-# worker file to be executed
-exec "master.rb"
-
 # name the worker
 name "Master"
 
 # include all the gems
 gem "iron_worker_ng"
+gem 'pg'
 
-# includ iron.io and twilio settings
+# include iron.io and twilio settings
 file "../config/application.yml"
+
+# include text message model
+dir "../app/models" 
+
+# worker file to be executed
+exec "master.rb"
