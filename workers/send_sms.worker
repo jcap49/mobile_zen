@@ -8,7 +8,7 @@ name "SendSMS"
 
 # include gems
 gem "twilio-ruby"
-gem "iron_cache"
+
 
 # include iron.io and twilio settings
 file "../config/application.yml"
