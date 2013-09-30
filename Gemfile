@@ -15,6 +15,7 @@ gem 'zurb-foundation'
 gem 'thin'
 gem 'figaro'
 gem 'iron_worker_ng'
+gem 'iron_cache'
 # gem 'turbolinks'
 
 

@@ -1,0 +1,14 @@
+runtime "ruby"
+
+# worker file to be executed
+exec "send_sms.rb"
+
+# name the worker
+name "SendSMS"
+
+# include gems
+gem "twilio-ruby"
+gem "iron_cache"
+
+# include iron.io and twilio settings
+file "../config/application.yml"
