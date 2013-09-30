@@ -6,7 +6,8 @@ exec "send_sms.rb"
 # name the worker
 name "SendSMS"
 
-# include gems
+# include all the gems
+gem "pg"
 gem "twilio-ruby"
 
 

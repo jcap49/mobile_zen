@@ -22,7 +22,8 @@ class TextMessagesController < ApplicationController
     #TODO: finish implementing create logic with proper error/notice handling
     if @text_message.save 
       redirect_to root_path, notice: 'Text message was successfully created.' 
-      send_welcome_text_message(text_message_params[:phone_number])
+      # send_welcome_text_message(text_message_params[:phone_number])
+      execute_text_message_worker(@text_message.id)
     else
       render action: 'new', error: 'There was a problem with your submission. Please try again.'
     end
@@ -56,13 +57,13 @@ class TextMessagesController < ApplicationController
     def send_welcome_text_message(phone_number)
       set_twilio_client
       if TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil
-        @client.account.sms.messages.create(
+        @twilio_client.account.sms.messages.create(
           from: TextMessage::TWILIO_PHONE_NUMBER,
           to: phone_number,
           body: "Hey there - welcome to Bonsai! Please reply with 'YES' to ensure your daily question is delivered on time."
           )
       elsif TextMessage.find_by_phone_number(text_message_params[:phone_number]) != nil
-        @client.account.sms.messages.create(
+        @twilio_client.account.sms.messages.create(
           from: TextMessage::TWILIO_PHONE_NUMBER,
           to: phone_number,
           body: "Hey there - welcome back to Bonsai! You're already opted into receiving your daily questions. Happy reflection!"
@@ -70,7 +71,19 @@ class TextMessagesController < ApplicationController
       end
     end
 
+    def execute_text_message_worker(text_message_id)
+      set_iron_client
+      @iron_client.tasks.create("master.rb", {
+        text_message_id: text_message_id,
+        database: Rails.configuration.database_configuration[Rails.env]
+        })
+    end
+
     def set_twilio_client
-      @client = Twilio::REST::Client.new(ENV["TEST_TWILIO_ACCOUNT_SID"], ENV["TEST_TWILIO_AUTH_TOKEN"])
+      @twilio_client = Twilio::REST::Client.new(ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"])
+    end
+
+    def set_iron_client
+      @iron_client = IronWorkerNG::Client.new(project_id: ENV['IRONIO_PROJECT_ID'], token: ENV['IRONIO_TOKEN'])   
     end
 end

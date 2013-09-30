@@ -14,9 +14,6 @@ iron_worker = IronWorkerNG::Client.new(project_id: project_id, token: token)
 # parse settings for db creds
 db_config = YAML.load_file("../config/database.yml")
 
-text_message = TextMessage.find_by_id(params['text_message_id']
-
-
 def setup_database
   puts "Database connection details:#{params['database'].inspect}"
   return unless params['database']
@@ -27,7 +24,7 @@ end
 def queue_text_message
   iron_worker.schedules.create("send_sms",
     {
-      :text_message_id => text_message.id,
+      :text_message_id => params['text_message_id'],
       :start_at => text_message.send_time.strftime("%I:%M%p"),
       :run_every => 3600 * 24
     })
