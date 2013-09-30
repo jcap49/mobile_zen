@@ -39,7 +39,7 @@ class TextMessagesController < ApplicationController
 
   def destroy
     @text_message.destroy
-    redirect_to text_messages_url 
+    redirect_to root_path
   end
 
   private
