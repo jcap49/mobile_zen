@@ -1,0 +1,20 @@
+runtime "ruby"
+
+# name the worker
+name "SMSHandler"
+
+# worker file to be executed
+exec "send_sms.rb"
+
+# merge all models
+dir "../app/models"
+
+# merge views
+dir "../app/views/text_messages"
+
+# include twilio settings
+file "../config/application.yml"
+
+# include twilio gem
+gem "twilio-ruby"
+
