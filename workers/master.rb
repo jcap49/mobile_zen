@@ -1,9 +1,9 @@
-require 'active_record'
+require "active_record"
 require 'iron_worker_ng'
 require 'pg'
 require 'yaml'
 require 'pry-rails'
-# require '..models/text_message.rb'
+# require 'models/text_message.rb'
 
 # parse settings for iron_worker creds and instantiate client
 config = YAML.load_file("../config/application.yml")
@@ -22,7 +22,8 @@ def setup_database
 end
 
 def queue_text_message
-  iron_worker.schedules.create("send_sms",
+  text_message = TextMessage.find_by_id(params['text_message_id'])
+  iron_worker.schedules.create("SendSMS",
     {
       :text_message_id => params['text_message_id'],
       :start_at => text_message.send_time.strftime("%I:%M%p"),
