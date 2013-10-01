@@ -7,6 +7,7 @@ name "Master"
 gem "iron_worker_ng"
 merge_gem 'activerecord'
 merge_gem 'pg'
+merge_gem 'twilio-ruby'
 
 # make sure pg is good to go
 full_remote_build true 

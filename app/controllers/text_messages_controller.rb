@@ -73,7 +73,6 @@ class TextMessagesController < ApplicationController
 
     def execute_text_message_worker(text_message_id, text_message_send_time)
       set_iron_client
-      binding.pry
       @iron_client.schedules.create("Master",{ 
           :text_message_id => text_message_id,
           :start_at => text_message_send_time,
