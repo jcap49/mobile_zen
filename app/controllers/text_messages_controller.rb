@@ -76,7 +76,7 @@ class TextMessagesController < ApplicationController
       binding.pry
       @iron_client.schedules.create("Master",{ 
           :text_message_id => text_message_id,
-          :start_at => text_message_send_time.strftime("%I:%M%p"),
+          :start_at => text_message_send_time,
           :run_every => 3600 * 24,
           :database => Rails.configuration.database_configuration[Rails.env]
         })

@@ -9,7 +9,7 @@ config = YAML.load_file("application.yml")
 account_sid = config['TWILIO_ACCOUNT_SID']
 auth_token = config['TWILIO_AUTH_TOKEN']
 
-# instantiate twilio client
+# # instantiate twilio client
 twilio_client = Twilio::REST::Client.new(account_sid, auth_token)
 
 def setup_database
