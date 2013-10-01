@@ -5,7 +5,11 @@ name "Master"
 
 # include all the gems
 gem "iron_worker_ng"
-gem 'pg'
+merge_gem 'activerecord'
+merge_gem 'pg'
+
+# make sure pg is good to go
+full_remote_build true 
 
 # include iron.io and twilio settings
 file "../config/application.yml"

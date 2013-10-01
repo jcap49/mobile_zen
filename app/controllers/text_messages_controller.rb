@@ -73,9 +73,9 @@ class TextMessagesController < ApplicationController
 
     def execute_text_message_worker(text_message_id)
       set_iron_client
-      @iron_client.tasks.create("master.rb", {
-        text_message_id: text_message_id,
-        database: Rails.configuration.database_configuration[Rails.env]
+      @iron_client.tasks.create("Master", {
+        :text_message_id => text_message_id,
+        :database => Rails.configuration.database_configuration[Rails.env]
         })
     end
 

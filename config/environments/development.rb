@@ -26,4 +26,11 @@ MobileZen::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  IronWorker.configure do |config|
+    config.token = ENV['IRONIO_TOKEN']
+    config.project_id = ENV['IRONIO_PROJECT_ID']
+  end
+
+  config.iw_worker = IronWorkerNG::Client.new(:token => config.token, :project_id => config.project_id)
 end

@@ -7,8 +7,12 @@ exec "send_sms.rb"
 name "SendSMS"
 
 # include all the gems
-gem "pg"
-gem "twilio-ruby"
+merge_gem "twilio-ruby"
+merge_gem 'pg'
+merge_gem 'activerecord'
+
+
+full_remote_build true
 
 
 # include iron.io and twilio settings

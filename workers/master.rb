@@ -1,21 +1,11 @@
-require "active_record"
+require 'active_record'
 require 'iron_worker_ng'
 require 'pg'
 require 'yaml'
-require 'pry-rails'
 # require 'models/text_message.rb'
 
-# parse settings for iron_worker creds and instantiate client
-config = YAML.load_file("../config/application.yml")
-project_id = config['IRONIO_PROJECT_ID']
-token = config['IRONIO_TOKEN']
-iron_worker = IronWorkerNG::Client.new(project_id: project_id, token: token)
-
-# parse settings for db creds
-db_config = YAML.load_file("../config/database.yml")
-
 def setup_database
-  puts "Database connection details:#{params['database'].inspect}"
+  puts "Database connection details: #{params['database'].inspect}"
   return unless params['database']
   # estabilsh database connection
   ActiveRecord::Base.establish_connection(params['database'])
@@ -24,8 +14,7 @@ end
 def queue_text_message
   text_message = TextMessage.find_by_id(params['text_message_id'])
   iron_worker.schedules.create("SendSMS",
-    {
-      :text_message_id => params['text_message_id'],
+    { :text_message_id => params['text_message_id'],
       :start_at => text_message.send_time.strftime("%I:%M%p"),
       :run_every => 3600 * 24
     })
