@@ -23,7 +23,7 @@ class TextMessagesController < ApplicationController
     if @text_message.save 
       redirect_to root_path, notice: 'Text message was successfully created.' 
       # send_welcome_text_message(text_message_params[:phone_number])
-      execute_text_message_worker(@text_message.id)
+      execute_text_message_worker(@text_message.id, @text_message.send_time)
     else
       render action: 'new', error: 'There was a problem with your submission. Please try again.'
     end
@@ -71,11 +71,14 @@ class TextMessagesController < ApplicationController
       end
     end
 
-    def execute_text_message_worker(text_message_id)
+    def execute_text_message_worker(text_message_id, text_message_send_time)
       set_iron_client
-      @iron_client.tasks.create("Master", {
-        :text_message_id => text_message_id,
-        :database => Rails.configuration.database_configuration[Rails.env]
+      binding.pry
+      @iron_client.schedules.create("Master",{ 
+          :text_message_id => text_message_id,
+          :start_at => text_message_send_time.strftime("%I:%M%p"),
+          :run_every => 3600 * 24,
+          :database => Rails.configuration.database_configuration[Rails.env]
         })
     end
 

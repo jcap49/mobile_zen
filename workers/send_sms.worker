@@ -4,7 +4,7 @@ runtime "ruby"
 exec "send_sms.rb"
 
 # name the worker
-name "SendSMS"
+name "Send"
 
 # include all the gems
 merge_gem "twilio-ruby"
