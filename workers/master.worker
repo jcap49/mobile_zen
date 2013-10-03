@@ -17,6 +17,7 @@ file "../config/application.yml"
 
 # include text message model
 dir "../app/models" 
+file "../app/models/text_message.rb"
 
 # worker file to be executed
 exec "master.rb"

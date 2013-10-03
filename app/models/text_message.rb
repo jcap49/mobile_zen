@@ -6,15 +6,4 @@ class TextMessage < ActiveRecord::Base
 
   TWILIO_PHONE_NUMBER = '+13152353586'
 
-
-  def send_sms(phone_number, text_body)
-    @client.account.sms.messages.create(
-      from: TWILIO_PHONE_NUMBER,
-      to: phone_number , 
-      body: text_body
-      )
-
-    logger.info "SMS with body #{text_body} sent to #{phone_number}"
-  end
-
 end
