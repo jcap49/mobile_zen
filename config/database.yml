@@ -3,6 +3,7 @@ development:
   encoding: unicode
   host: localhost
   database: mobile_zen_development
+  port: 5432
   pool: 5
   username: johncapecelatro
   password:
