@@ -27,6 +27,6 @@ MobileZen::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  ENV['IRON_WORKER_TOKEN'] = 'Xygz_b7ZyROUve3s8YW91koISDk'
-  ENV['IRON_WORKER_PROJECT_ID'] = '522fb8b4f98ded000d000005'
+  ENV["IRON_WORKER_TOKEN"] = 'Xygz_b7ZyROUve3s8YW91koISDk'
+  ENV["IRON_WORKER_PROJECT_ID"] = '522fb8b4f98ded000d000005'
 end
