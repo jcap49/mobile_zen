@@ -27,5 +27,4 @@ iron.json
 # Ignore database.yml for local stuff
 /config/databse.yml
 
-# ignore dev.rb for iron.io creds
-/config/environments/development.rb
+
