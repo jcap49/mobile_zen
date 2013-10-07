@@ -77,4 +77,7 @@ MobileZen::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  ENV["IRON_WORKER_TOKEN"] = 'Xygz_b7ZyROUve3s8YW91koISDk'
+  ENV["IRON_WORKER_PROJECT_ID"] = '522fb8b4f98ded000d000005'
 end
