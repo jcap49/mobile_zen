@@ -86,6 +86,6 @@ class TextMessagesController < ApplicationController
     end
 
     def set_iron_client
-      @iron_client = IronWorkerNG::Client.new
+      @iron_client = IronWorkerNG::Client.new(project_id: ENV['IRON_WORKER_PROJECT_ID'], token: ENV['IRON_WORKER_TOKEN'])   
     end
 end
