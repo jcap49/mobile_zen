@@ -10,8 +10,12 @@ config = YAML.load_file("application.yml")
 account_sid = config['TWILIO_ACCOUNT_SID']
 auth_token = config['TWILIO_AUTH_TOKEN']
 
-# instantiate twilio client
-twilio_client = Twilio::REST::Client.new(account_sid, auth_token)
+# instantiate twilio client in dev env
+if Rails.env == 'production'
+  twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+elsif Rails.env == 'development' 
+  twilio_client = Twilio::REST::Client.new(account_sid, auth_token)
+end
 
 def setup_database
   puts "Database connection details: #{params['database'].inspect}"
