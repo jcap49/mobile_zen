@@ -21,5 +21,10 @@
 # Ignore Iron.io credentials
 /workers/.iron.json
 
+# ignore iron.io creds in prod
+iron.json
+
 # Ignore database.yml for local stuff
 /config/databse.yml
+
+
