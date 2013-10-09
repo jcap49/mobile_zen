@@ -72,8 +72,8 @@ class TextMessagesController < ApplicationController
     end
 
     def execute_text_message_worker(text_message_id, text_message_send_time)
-      set_iron_client
-      @iron_worker.schedules.create("Master",{ 
+      iron_worker = IronWorkerNG::Client.new
+      iron_worker.schedules.create("Master",{ 
           :text_message_id => text_message_id,
           :start_at => text_message_send_time,
           :run_every => 3600 * 24,
