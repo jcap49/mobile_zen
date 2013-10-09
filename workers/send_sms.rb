@@ -4,13 +4,10 @@ require 'active_record'
 require 'pg'
 require 'yaml'
 
-# parse the settings file for twilio & iron_worker creds
+# load in twilio vars
 config = YAML.load_file("application.yml")
-account_sid = config['TWILIO_ACCOUNT_SID']
-auth_token = config['TWILIO_AUTH_TOKEN']
-
-# instantiate twilio client
-twilio_client = Twilio::REST::Client.new(account_sid, auth_token)
+@account_sid = config['TWILIO_ACCOUNT_SID']
+@auth_token = config['TWILIO_AUTH_TOKEN']
 
 def init_database
   puts "Database connection details: #{params['database'].inspect}"
@@ -21,6 +18,7 @@ end
 
 # send sms
 def send_sms
+  twilio_client = Twilio::REST::Client.new(@account_sid, @auth_token)
   text_message = TextMessage.find_by_id(params['text_message_id'])
   twilio_client.account.sms.messages.create(
     from: TextMessages::TWILIO_PHONE_NUMBER,
