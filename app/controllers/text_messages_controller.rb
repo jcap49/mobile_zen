@@ -86,18 +86,10 @@ class TextMessagesController < ApplicationController
     end
 
     def set_iron_client
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       if Rails.env == 'production'
         @iron_worker = IronWorkerNG::Client.new
       elsif Rails.env == 'development'
         @iron_worker = IronWorkerNG::Client.new(project_id: ENV['IRON_WORKER_PROJECT_ID'], token: ENV['IRON_WORKER_TOKEN']) 
       end
-=======
-      @iron_client = IronWorkerNG::Client.new(project_id: ENV['IRON_WORKER_PROJECT_ID'], token: ENV['IRON_WORKER_TOKEN'])   
->>>>>>> Stashed changes
-=======
-      @iron_client = IronWorkerNG::Client.new(project_id: ENV['IRON_WORKER_PROJECT_ID'], token: ENV['IRON_WORKER_TOKEN'])   
->>>>>>> Stashed changes
     end
 end
