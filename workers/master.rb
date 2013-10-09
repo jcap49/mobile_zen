@@ -5,17 +5,11 @@ require 'pg'
 require 'yaml'
 require 'models/text_message'
 
-# parse the settings file for twilio & iron_worker creds
+# load in twilio vars
 config = YAML.load_file("application.yml")
-account_sid = config['TWILIO_ACCOUNT_SID']
-auth_token = config['TWILIO_AUTH_TOKEN']
+@account_sid = config['TWILIO_ACCOUNT_SID']
+@auth_token = config['TWILIO_AUTH_TOKEN']
 
-# instantiate twilio client in dev env
-if Rails.env == 'production'
-  twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
-elsif Rails.env == 'development' 
-  twilio_client = Twilio::REST::Client.new(account_sid, auth_token)
-end
 
 def setup_database
   puts "Database connection details: #{params['database'].inspect}"
@@ -25,9 +19,10 @@ def setup_database
 end
 
 def send_sms
+  twilio_client = Twilio::REST::Client.new(@account_sid, @auth_token)
   text_message = TextMessage.find_by_id(params['text_message_id'])
   twilio_client.account.sms.messages.create(
-    from: TextMessages::TWILIO_PHONE_NUMBER,
+    from: TextMessage::TWILIO_PHONE_NUMBER,
     to: text_message.phone_number,
     body: text_message.text_body
   )  
