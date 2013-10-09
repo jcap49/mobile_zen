@@ -18,6 +18,7 @@ gem 'iron_worker_ng'
 gem 'iron_cache'
 # gem 'turbolinks'
 gem 'rails_12factor', group: :production
+gem 'devise'
 
 
 
