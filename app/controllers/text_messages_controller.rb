@@ -65,19 +65,19 @@ class TextMessagesController < ApplicationController
 
     def send_welcome_text_message(phone_number)
       set_twilio_client
-      if TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil
+      # if TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil
         @twilio_client.account.sms.messages.create(
           from: TextMessage::TWILIO_PHONE_NUMBER,
           to: phone_number,
-          body: TextMessage::UNREGISTERED_WELCOME_MESSAGE
+          body: TextMessage::REGISTERED_WELCOME_MESSAGE unless TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil TextMessage::UNREGISTERED_WELCOME_MESSAGE
           )
-      elsif TextMessage.find_by_phone_number(text_message_params[:phone_number]) != nil
-        @twilio_client.account.sms.messages.create(
-          from: TextMessage::TWILIO_PHONE_NUMBER,
-          to: phone_number,
-          body: TextMessage::REGISTERED_WELCOME_MESSAGE
-          )
-      end
+      # elsif TextMessage.find_by_phone_number(text_message_params[:phone_number]) != nil
+      #   @twilio_client.account.sms.messages.create(
+      #     from: TextMessage::TWILIO_PHONE_NUMBER,
+      #     to: phone_number,
+      #     body: TextMessage::REGISTERED_WELCOME_MESSAGE
+      #     )
+      # end
     end
 
     def send_registration_confirmation(phone_number)
