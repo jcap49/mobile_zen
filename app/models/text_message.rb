@@ -7,5 +7,6 @@ class TextMessage < ActiveRecord::Base
   belongs_to :user
   
   TWILIO_PHONE_NUMBER = '+13152353586'
-
+  UNREGISTERED_WELCOME_MESSAGE = "Hey there - welcome to Bonsai! Please reply with 'YES' to ensure your daily question is delivered on time."
+  REGISTERED_WELCOME_MESSAGE = "Hey there - welcome back to Bonsai! You're already opted into receiving your daily questions. Happy reflection!"
 end

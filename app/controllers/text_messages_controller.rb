@@ -43,6 +43,15 @@ class TextMessagesController < ApplicationController
     redirect_to root_path
   end
 
+  def registration
+    # 1. receive text message & instantiate TWiML (if necessary)
+    # 2. extract text message number from header
+    # 3. look up user with phone number & mark as registered
+    # 4. save record
+    # 5. send confirmation
+    send_registration_confirmation(phone_number)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_text_message
@@ -60,15 +69,24 @@ class TextMessagesController < ApplicationController
         @twilio_client.account.sms.messages.create(
           from: TextMessage::TWILIO_PHONE_NUMBER,
           to: phone_number,
-          body: "Hey there - welcome to Bonsai! Please reply with 'YES' to ensure your daily question is delivered on time."
+          body: TextMessage::UNREGISTERED_WELCOME_MESSAGE
           )
       elsif TextMessage.find_by_phone_number(text_message_params[:phone_number]) != nil
         @twilio_client.account.sms.messages.create(
           from: TextMessage::TWILIO_PHONE_NUMBER,
           to: phone_number,
-          body: "Hey there - welcome back to Bonsai! You're already opted into receiving your daily questions. Happy reflection!"
+          body: TextMessage::REGISTERED_WELCOME_MESSAGE
           )
       end
+    end
+
+    def send_registration_confirmation(phone_number)
+      set_twilio_client
+      @twilio_client.account.sms.messages.create(
+          from: TextMessage::TWILIO_PHONE_NUMBER,
+          to: phone_number,
+          body: "Fantastic - you're all set to go. Thanks for registering!"
+          )
     end
 
     def execute_text_message_worker(text_message_id, text_message_send_time)
