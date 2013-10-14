@@ -25,6 +25,6 @@
 iron.json
 
 # Ignore database.yml for local stuff
-/config/databse.yml
+/config/database.yml
 
 
