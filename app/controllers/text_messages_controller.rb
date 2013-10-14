@@ -63,37 +63,37 @@ class TextMessagesController < ApplicationController
       params.require(:text_message).permit(:phone_number, :text_body, :send_time)
     end
 
-    def send_welcome_text_message(phone_number)
-      set_twilio_client
-      # if TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil
-        @twilio_client.account.sms.messages.create(
-          from: TextMessage::TWILIO_PHONE_NUMBER,
-          to: phone_number,
-          body: TextMessage::REGISTERED_WELCOME_MESSAGE unless TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil TextMessage::UNREGISTERED_WELCOME_MESSAGE
-          )
-      # elsif TextMessage.find_by_phone_number(text_message_params[:phone_number]) != nil
-      #   @twilio_client.account.sms.messages.create(
-      #     from: TextMessage::TWILIO_PHONE_NUMBER,
-      #     to: phone_number,
-      #     body: TextMessage::REGISTERED_WELCOME_MESSAGE
-      #     )
-      # end
-    end
+    # def send_welcome_text_message(phone_number)
+    #   set_twilio_client
+    #   # if TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil
+    #     @twilio_client.account.sms.messages.create(
+    #       from: TextMessage::TWILIO_PHONE_NUMBER,
+    #       to: phone_number,
+    #       body: TextMessage::REGISTERED_WELCOME unless TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil TextMessage::UNREGISTERED_WELCOME
+    #       )
+    #   # elsif TextMessage.find_by_phone_number(text_message_params[:phone_number]) != nil
+    #   #   @twilio_client.account.sms.messages.create(
+    #   #     from: TextMessage::TWILIO_PHONE_NUMBER,
+    #   #     to: phone_number,
+    #   #     body: TextMessage::REGISTERED_WELCOME_MESSAGE
+    #   #     )
+    #   # end
+    # end
 
     def send_registration_confirmation(phone_number)
       set_twilio_client
       @twilio_client.account.sms.messages.create(
           from: TextMessage::TWILIO_PHONE_NUMBER,
           to: phone_number,
-          body: "Fantastic - you're all set to go. Thanks for registering!"
+          body: TextMessage::REGISTRATION_CONFIRMATION
           )
     end
 
-    def execute_text_message_worker(text_message_id, text_message_send_time)
+    def execute_text_message_worker(text_message_id, send_time)
       iron_worker = IronWorkerNG::Client.new
       iron_worker.schedules.create("Master",{ 
           :text_message_id => text_message_id,
-          :start_at => text_message_send_time,
+          :start_at => send_time,
           :run_every => 3600 * 24,
           :database => Rails.configuration.database_configuration[Rails.env]
         })
