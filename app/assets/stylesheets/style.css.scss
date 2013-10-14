@@ -9,19 +9,14 @@
 
 //Main Section
 
-.section {
-  background-color: red;
-  width: 80%;
-  height: 800px;
 
-}
 
 .landing_header {
   text-align: center;
   margin-top: 3%;
   margin-bottom: 3%;
   position: relative;
-  color: blue;
+  
 }
 
 #landing_title {
@@ -43,7 +38,17 @@
   position: absolute;
   margin: auto;
   width: 50%;
+  font-family: 'Titillium Web', sans-serif;
 }
+
+// Font Styles
+
+/* font-family: 'Source Sans Pro', sans-serif;
+font-family: 'Bubblegum Sans', cursive;
+font-family: 'Gochi Hand', cursive;
+font-family: 'Titillium Web', sans-serif;
+*/
+
 
 
 
