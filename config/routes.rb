@@ -5,5 +5,6 @@ MobileZen::Application.routes.draw do
   get 'about' => 'pages#about'
   post 'registration' => 'text_messages#registration'
   
-  root to: 'text_messages#new'
+  root to: 'pages#index'
+
 end

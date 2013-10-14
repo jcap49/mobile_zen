@@ -1,4 +1,4 @@
-!!! 5
+
 / paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
 /[if lt IE 7 ] <html class=\"ie6\" lang=\"en\">
 /[if IE 7 ]    <html class=\"ie7\" lang=\"en\">
@@ -16,8 +16,8 @@
   %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }
   
   %title= content_for?(:title) ? yield(:title) : "Bonsai"
-
   
+  = stylesheet_link_tag "application"
   = javascript_include_tag "vendor/custom.modernizr"
   = csrf_meta_tag
 
