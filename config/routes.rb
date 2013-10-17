@@ -3,7 +3,7 @@ MobileZen::Application.routes.draw do
   resources :text_messages, except: [:index, :show, :edit, :update]
 
   get 'about' => 'pages#about'
-  post 'registration' => 'text_messages#registration'
+  post 'process_text_message' => 'text_messages#process_text_message'
   
   root to: 'pages#index'
 

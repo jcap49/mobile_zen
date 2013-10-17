@@ -43,12 +43,13 @@ class TextMessagesController < ApplicationController
     redirect_to root_path
   end
 
-  def registration
-    # 1. receive text message & instantiate TWiML (if necessary)
-    # 2. extract text message number from header
-    # 3. look up user with phone number & mark as registered
-    # 4. save record
-    # 5. send confirmation
+  def process_text_message
+    phone_number = params[:From]
+    text_message = TextMessage.find_by_phone_number(phone_number)
+    user_id = text_message.user_id
+    user = User.find_by_id(user_id)
+    user.update_attribute("registered", true)
+    user.save!
     send_registration_confirmation(phone_number)
   end
 
@@ -63,22 +64,22 @@ class TextMessagesController < ApplicationController
       params.require(:text_message).permit(:phone_number, :text_body, :send_time)
     end
 
-    # def send_welcome_text_message(phone_number)
-    #   set_twilio_client
-    #   # if TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil
-    #     @twilio_client.account.sms.messages.create(
-    #       from: TextMessage::TWILIO_PHONE_NUMBER,
-    #       to: phone_number,
-    #       body: TextMessage::REGISTERED_WELCOME unless TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil TextMessage::UNREGISTERED_WELCOME
-    #       )
-    #   # elsif TextMessage.find_by_phone_number(text_message_params[:phone_number]) != nil
-    #   #   @twilio_client.account.sms.messages.create(
-    #   #     from: TextMessage::TWILIO_PHONE_NUMBER,
-    #   #     to: phone_number,
-    #   #     body: TextMessage::REGISTERED_WELCOME_MESSAGE
-    #   #     )
-    #   # end
-    # end
+    def send_welcome_text_message(phone_number)
+      set_twilio_client
+      if TextMessage.find_by_phone_number(text_message_params[:phone_number]) == nil
+        @twilio_client.account.sms.messages.create(
+          from: TextMessage::TWILIO_PHONE_NUMBER,
+          to: phone_number,
+          body: TextMessage::UNREGISTERED_WELCOME 
+          )
+      elsif TextMessage.find_by_phone_number(text_message_params[:phone_number]) != nil
+        @twilio_client.account.sms.messages.create(
+          from: TextMessage::TWILIO_PHONE_NUMBER,
+          to: phone_number,
+          body: TextMessage::REGISTERED_WELCOME
+          )
+      end
+    end
 
     def send_registration_confirmation(phone_number)
       set_twilio_client
