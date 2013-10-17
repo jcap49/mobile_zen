@@ -17,7 +17,7 @@
       Just need a little bit of info from you first... 
   
 
-  / #landing_form
-  /   =render 'text_messages/form' 
+  #landing_form
+    =render 'text_messages/form', locale: {text_message: TextMessage.new}
 
   

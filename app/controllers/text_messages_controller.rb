@@ -45,7 +45,15 @@ class TextMessagesController < ApplicationController
 
   def process_text_message
     phone_number = params[:From]
+    body = params[:Body]
     update_registration(phone_number)
+    
+    # if body.downcase == 'yes' 
+    #   update_registration(phone_number)
+    # elsif body.downcase == 'no'
+    #   send_not_registered_message
+    # end   
+      
   end
 
   private
