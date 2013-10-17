@@ -95,6 +95,7 @@ class TextMessagesController < ApplicationController
           :text_message_id => text_message_id,
           :start_at => send_time,
           :run_every => 3600 * 24,
+          :run_times => 365,
           :database => Rails.configuration.database_configuration[Rails.env]
         })
     end
