@@ -103,4 +103,13 @@ class TextMessagesController < ApplicationController
     def set_twilio_client
       @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
     end
+
+    def set_iron_client
+      if Rails.env == 'production'
+        @iron_worker = IronWorkerNG::Client.new
+      elsif Rails.env == 'development'
+        @iron_worker = IronWorkerNG::Client.new(project_id: ENV['IRON_WORKER_PROJECT_ID'], token: ENV['IRON_WORKER_TOKEN']) 
+      end
+    end
+
 end
