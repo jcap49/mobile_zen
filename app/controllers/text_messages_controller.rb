@@ -45,12 +45,7 @@ class TextMessagesController < ApplicationController
 
   def process_text_message
     phone_number = params[:From]
-    text_message = TextMessage.find_by_phone_number(phone_number)
-    user_id = text_message.user_id
-    user = User.find_by_id(user_id)
-    user.update_attribute("registered", true)
-    user.save!
-    send_registration_confirmation(phone_number)
+    update_registration(phone_number)
   end
 
   private
@@ -81,6 +76,15 @@ class TextMessagesController < ApplicationController
       end
     end
 
+    def update_registration(phone_number)
+      text_message = TextMessage.find_by_phone_number(phone_number)
+      user_id = text_message.user_id
+      user = User.find_by_id(user_id)
+      user.update_attribute("registered", true)
+      user.save!
+      send_registration_confirmation(phone_number)
+    end
+
     def send_registration_confirmation(phone_number)
       set_twilio_client
       @twilio_client.account.sms.messages.create(
@@ -104,13 +108,4 @@ class TextMessagesController < ApplicationController
     def set_twilio_client
       @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
     end
-
-    def set_iron_client
-      if Rails.env == 'production'
-        @iron_worker = IronWorkerNG::Client.new
-      elsif Rails.env == 'development'
-        @iron_worker = IronWorkerNG::Client.new(project_id: ENV['IRON_WORKER_PROJECT_ID'], token: ENV['IRON_WORKER_TOKEN']) 
-      end
-    end
-
 end

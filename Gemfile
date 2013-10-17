@@ -9,16 +9,15 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'haml-rails'
-gem 'httparty'
 gem 'twilio-ruby'
 gem 'zurb-foundation'
 gem 'thin'
 gem 'figaro'
 gem 'iron_worker_ng'
-gem 'iron_cache'
 # gem 'turbolinks'
 gem 'rails_12factor', group: :production
 gem 'devise'
+gem 'localtunnel'
 
 
 
