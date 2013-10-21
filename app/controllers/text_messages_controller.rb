@@ -58,14 +58,7 @@ class TextMessagesController < ApplicationController
   def process_text_message
     phone_number = params[:From]
     body = params[:Body]
-    
-    if body.downcase == 'yes' 
-      update_registration(phone_number)
-    elsif body.downcase == 'no'
-      send_not_registered_message
-    elsif body.downcase == 'stop'
-      destroy(phone_number)
-    end   
+    parse_text_message_body(body, phone_number)
   end
 
   private
@@ -102,16 +95,6 @@ class TextMessagesController < ApplicationController
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
       user.save!
-      send_registration_confirmation(phone_number)
-    end
-
-    def send_registration_confirmation(phone_number)
-      set_twilio_client
-      @twilio_client.account.sms.messages.create(
-            from: TextMessage::TWILIO_PHONE_NUMBER,
-            to: phone_number,
-            body: TextMessage::REGISTRATION_CONFIRMATION
-          )
     end
 
     def execute_text_message_worker(text_message_id, send_time)
@@ -127,5 +110,15 @@ class TextMessagesController < ApplicationController
 
     def set_twilio_client
       @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+    end
+
+    def parse_text_message_body(text_message_body, phone_number)
+      if text_message_body.downcase == 'yes' 
+        update_registration(phone_number)
+        render 'update_registration.xml.erb', content_type: 'text/xml'
+      elsif text_message_body.downcase == 'stop'
+        destroy(phone_number)
+        render 'unsubscribe.xml.erb', content_type: 'text/xml'
+      end   
     end
 end
