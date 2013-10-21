@@ -90,7 +90,7 @@ class TextMessagesController < ApplicationController
     end
 
     def update_registration(phone_number)
-      text_message = TextMessage.find_by_phone_number(phone_number).first
+      text_message = TextMessage.find_by_phone_number(phone_number)
       user_id = text_message.user_id
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
