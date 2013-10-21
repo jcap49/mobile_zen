@@ -30,7 +30,7 @@ class TextMessagesController < ApplicationController
       if @text_message.save
         session[:text_message_id] = @text_message.id
         redirect_to new_user_registration_path
-        # send_welcome_text_message(text_message_params[:phone_number])
+        send_welcome_text_message(text_message_params[:phone_number])
         # execute_text_message_worker(@text_message.id, @text_message.send_time)
       else
         redirect_to root_path, notice: "Whoops something went wrong - give it another go."
@@ -58,15 +58,14 @@ class TextMessagesController < ApplicationController
   def process_text_message
     phone_number = params[:From]
     body = params[:Body]
-    update_registration(phone_number)
     
-    # if body.downcase == 'yes' 
-    #   update_registration(phone_number)
-    # elsif body.downcase == 'no'
-    #   send_not_registered_message
-    # elsif body.downcase == 'stop'
-    #   destroy(phone_number)
-    # end   
+    if body.downcase == 'yes' 
+      update_registration(phone_number)
+    elsif body.downcase == 'no'
+      send_not_registered_message
+    elsif body.downcase == 'stop'
+      destroy(phone_number)
+    end   
   end
 
   private
@@ -98,7 +97,7 @@ class TextMessagesController < ApplicationController
     end
 
     def update_registration(phone_number)
-      text_message = TextMessage.find_by_phone_number(phone_number)
+      text_message = TextMessage.find_by_phone_number(phone_number).first
       user_id = text_message.user_id
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
