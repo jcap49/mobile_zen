@@ -16,16 +16,30 @@ class TextMessagesController < ApplicationController
   # def edit
   # end
 
-  def create
-    @text_message = TextMessage.new(text_message_params)
 
-    #TODO: finish implementing create logic with proper error/notice handling
-    if @text_message.save 
-      redirect_to root_path, notice: 'Text message was successfully created.' 
-      # send_welcome_text_message(text_message_params[:phone_number])
-      execute_text_message_worker(@text_message.id, @text_message.send_time)
+
+  def create
+    # @text_message = TextMessage.new(text_message_params)
+    
+    if user_signed_in?
+      @text_message = current_user.text_messages.build(text_message_params)
+      if @text_message.save
+        redirect_to root_path, notice: 'Text message was successfully created.'
+      else
+        redirect_to root_path, notice: 'Whoops something went wrong.'
+      end
     else
-      render action: 'new', error: 'There was a problem with your submission. Please try again.'
+      @text_message = TextMessage.new(text_message_params)
+      @text_message.user_id = -1
+
+      if @text_message.save
+        session[:text_message_id] = @text_message.id
+        redirect_to new_user_registration_path
+        # send_welcome_text_message(text_message_params[:phone_number])
+        # execute_text_message_worker(@text_message.id, @text_message.send_time)
+      else
+        redirect_to root_path, notice: "Whoops something went wrong - give it another go."
+      end
     end
   end
 
@@ -38,8 +52,11 @@ class TextMessagesController < ApplicationController
   #   end
   # end
 
-  def destroy
-    @text_message.destroy
+  def destroy(phone_number)
+    text_message = TextMessage.find_by_phone_number(phone_number)
+    user_id = text_message.user_id
+    user = User.find_by_id(user_id)
+    text_message.destroy
     redirect_to root_path
   end
 
@@ -52,8 +69,9 @@ class TextMessagesController < ApplicationController
     #   update_registration(phone_number)
     # elsif body.downcase == 'no'
     #   send_not_registered_message
+    # elsif body.downcase == 'stop'
+    #   destroy(phone_number)
     # end   
-      
   end
 
   private
@@ -64,7 +82,7 @@ class TextMessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def text_message_params
-      params.require(:text_message).permit(:phone_number, :text_body, :send_time)
+      params.require(:text_message).permit(:phone_number, :text_body, :send_time, :user_id)
     end
 
     def send_welcome_text_message(phone_number)
@@ -96,15 +114,15 @@ class TextMessagesController < ApplicationController
     def send_registration_confirmation(phone_number)
       set_twilio_client
       @twilio_client.account.sms.messages.create(
-          from: TextMessage::TWILIO_PHONE_NUMBER,
-          to: phone_number,
-          body: TextMessage::REGISTRATION_CONFIRMATION
+            from: TextMessage::TWILIO_PHONE_NUMBER,
+            to: phone_number,
+            body: TextMessage::REGISTRATION_CONFIRMATION
           )
     end
 
     def execute_text_message_worker(text_message_id, send_time)
       iron_worker = IronWorkerNG::Client.new
-      iron_worker.schedules.create("Master",{ 
+      iron_worker.schedules.create("Master", { 
           :text_message_id => text_message_id,
           :start_at => send_time,
           :run_every => 3600 * 24,

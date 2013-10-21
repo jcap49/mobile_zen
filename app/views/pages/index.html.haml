@@ -1,5 +1,8 @@
 .section
   .landing_header
+    %p
+      =link_to 'logout', destroy_user_session_path, :method => "delete"
+      =link_to 'login', new_user_session_path
     %h1.subheader#landing_title
       Welcome to Bonsai 
     %h3.subheader
@@ -18,6 +21,7 @@
   
 
   #landing_form
+    / =render 'devise/registrations/form', locale: {user: User.new, text_message: TextMessage.new}
     =render 'text_messages/form', locale: {text_message: TextMessage.new}
 
   

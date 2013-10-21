@@ -5,5 +5,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :text_messages
+  accepts_nested_attributes_for :text_messages
 
 end
