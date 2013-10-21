@@ -9,7 +9,6 @@ MobileZen::Application.routes.draw do
   post 'sign_up' => 'custom_users#new'
   get 'about' => 'pages#about'
   post 'process_text_message' => 'text_messages#process_text_message'
-  # post 'register_user' => 'custom_users#create'
 
   root to: 'pages#index'
 

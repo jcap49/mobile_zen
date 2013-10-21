@@ -9,22 +9,17 @@ class TextMessagesController < ApplicationController
   # def show
   # end
 
-  def new
-    @text_message = TextMessage.new
-  end
-
   # def edit
   # end
 
 
 
   def create
-    # @text_message = TextMessage.new(text_message_params)
-    
     if user_signed_in?
       @text_message = current_user.text_messages.build(text_message_params)
       if @text_message.save
         redirect_to root_path, notice: 'Text message was successfully created.'
+        # execute_text_message_worker(@text_message.id, @text_message.send_time)
       else
         redirect_to root_path, notice: 'Whoops something went wrong.'
       end
