@@ -56,9 +56,7 @@ class TextMessagesController < ApplicationController
   end
 
   def process_text_message
-    phone_number = params[:From]
-    body = params[:Body]
-    parse_text_message_body(body, phone_number)
+    parse_text_message_body(params[:Body], params[:From])
   end
 
   private
