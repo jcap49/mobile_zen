@@ -47,19 +47,11 @@ class CustomUsersController < Devise::RegistrationsController
 
   def send_welcome_text_message(phone_number)
     set_twilio_client
-    if TextMessage.find_by_phone_number(phone_number) == nil
-      @twilio_client.account.sms.messages.create(
-        from: TextMessage::TWILIO_PHONE_NUMBER,
-        to: phone_number,
-        body: TextMessage::UNREGISTERED_WELCOME 
-        )
-    elsif TextMessage.find_by_phone_number(phone_number) != nil
-      @twilio_client.account.sms.messages.create(
-        from: TextMessage::TWILIO_PHONE_NUMBER,
-        to: phone_number,
-        body: TextMessage::REGISTERED_WELCOME
-        )
-    end
+    @twilio_client.account.sms.messages.create(
+      from: TextMessage::TWILIO_PHONE_NUMBER,
+      to: phone_number,
+      body: TextMessage::UNREGISTERED_WELCOME 
+      )    
   end
 
   def execute_text_message_worker(text_message_id, send_time, user_id)
