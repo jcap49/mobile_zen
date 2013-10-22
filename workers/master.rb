@@ -35,7 +35,7 @@ def is_registered?
 end
 
 setup_database
-unless is_registered? == false
+if is_registered? 
   send_sms
 end
 

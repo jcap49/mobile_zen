@@ -15,11 +15,9 @@ full_remote_build true
 # include iron.io and twilio settings
 file "../config/application.yml"
 
-# include text message model
+# include text message & user model
 dir "../app/models" 
 file "../app/models/text_message.rb"
-
-# include user model
 file "../app/models/user.rb"
 
 # worker file to be executed
