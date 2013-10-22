@@ -18,7 +18,7 @@ class CustomUsersController < Devise::RegistrationsController
       # actions upon successful user reg
 
       send_welcome_text_message(@text_message.phone_number)
-      # execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
+      execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
 
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
