@@ -10,13 +10,11 @@ class CustomUsersController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     if resource.save
-      @text_message = TextMessage.find_by_id(session[:text_message_id])
-      @text_message.user_id = resource.id
-      @text_message.save
-
-      # stuck these two methods here to handle text message
-      # actions upon successful user reg
-      send_welcome_text_message(@text_message.phone_number)
+      set_text_message
+      update_text_message_user_id(@text_message)
+      sanitize_phone_number(@text_message)
+      
+      # send_welcome_text_message(@text_message.phone_number)
       # execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
 
       if resource.active_for_authentication?
@@ -42,6 +40,10 @@ class CustomUsersController < Devise::RegistrationsController
 
   def set_twilio_client
     @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+  end
+
+  def set_text_message
+    @text_message = TextMessage.find(session[:text_message_id])
   end
 
   def send_welcome_text_message(phone_number)
@@ -71,6 +73,18 @@ class CustomUsersController < Devise::RegistrationsController
         :run_times => 365,
         :database => Rails.configuration.database_configuration[Rails.env]
       })
+  end
+
+  def update_text_message_user_id(text_message)
+    text_message.user_id = resource.id
+    text_message.save
+  end
+
+  def sanitize_phone_number(text_message)
+    phone_number = text_message.phone_number
+    phone_number.gsub!("-", "")
+    phone_number.prepend("+1")
+    text_message.update_column("phone_number", phone_number)
   end
 end
   

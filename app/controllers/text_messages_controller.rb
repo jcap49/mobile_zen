@@ -12,7 +12,6 @@ class TextMessagesController < ApplicationController
 
     if @text_message.save
       session[:text_message_id] = @text_message.id
-      sanitize_phone_number(@text_message.phone_number)
       redirect_to new_user_registration_path
     else
       redirect_to root_path, notice: "Whoops something went wrong - give it another go."
@@ -45,7 +44,7 @@ class TextMessagesController < ApplicationController
     def parse_text_message_body(text_message_body, phone_number)
       if text_message_body.downcase == 'yes' 
         update_registration(phone_number)
-        render 'update_registration.xml.erb', content_type: 'text/xml'
+        render 'updaate_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'stop'
         destroy(phone_number)
         render 'unsubscribe.xml.erb', content_type: 'text/xml'
@@ -58,14 +57,5 @@ class TextMessagesController < ApplicationController
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
       user.save!
-    end
-
-    def sanitize_phone_number(phone_number)
-      text_message = TextMessage.find_by_phone_number(phone_number)
-      phone_number.gsub!("-", "")
-      phone_number.prepend("+1")
-      text_message.phone_number = phone_number
-      text_message.save(validate: false)
-      # text_message.update_attribute("phone_number", phone_number)
     end
 end
