@@ -44,7 +44,7 @@ class TextMessagesController < ApplicationController
     def parse_text_message_body(text_message_body, phone_number)
       if text_message_body.downcase == 'yes' 
         update_registration(phone_number)
-        render 'updaate_registration.xml.erb', content_type: 'text/xml'
+        render 'update_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'stop'
         destroy(phone_number)
         render 'unsubscribe.xml.erb', content_type: 'text/xml'
