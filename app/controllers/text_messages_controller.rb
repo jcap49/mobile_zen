@@ -3,8 +3,16 @@ class TextMessagesController < ApplicationController
 
   def create  
     if user_signed_in?
+      unless TextMessage.find_by_user_id(current_user.id) != nil
+        @text_message = TextMessage.new(text_message_params)
+
+        if @text_message.save
+          redirect_to root_path, notice: "Text message successfully created."
+        else
+          redirect_to root_path, notice: "Whoops something went wrong - give it another go."
+        end
+      end
       redirect_to root_path, notice: "Sorry - only one text message per person. For now. :)"
-      return
     end
 
     @text_message = TextMessage.new(text_message_params)
@@ -20,8 +28,6 @@ class TextMessagesController < ApplicationController
 
   def destroy(phone_number)
     text_message = TextMessage.find_by_phone_number(phone_number)
-    user_id = text_message.user_id
-    user = User.find_by_id(user_id)
     text_message.destroy
     redirect_to root_path
   end
