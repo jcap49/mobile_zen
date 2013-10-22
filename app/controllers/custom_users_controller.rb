@@ -3,9 +3,8 @@ class CustomUsersController < Devise::RegistrationsController
     super
   end
 
-  # extended devise reg controller to allow for submission 
+  # extended devise reg controller (create action) to allow for submission 
   # of text message object then user registration
-
   def create
     build_resource(sign_up_params)
 
@@ -14,7 +13,7 @@ class CustomUsersController < Devise::RegistrationsController
       update_text_message_user_id(@text_message)
       sanitize_phone_number(@text_message)
       send_welcome_text_message(@text_message.phone_number)
-      # execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
+      execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
 
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
@@ -33,50 +32,50 @@ class CustomUsersController < Devise::RegistrationsController
 
   protected
 
-  def sign_up_params
-    devise_parameter_sanitizer.sanitize(:sign_up)
-  end
+    def sign_up_params
+      devise_parameter_sanitizer.sanitize(:sign_up)
+    end
 
-  def set_twilio_client
-    @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
-  end
+    def set_twilio_client
+      @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+    end
 
-  def set_text_message
-    @text_message = TextMessage.find(session[:text_message_id])
-  end
+    def set_text_message
+      @text_message = TextMessage.find(session[:text_message_id])
+    end
 
-  # for unregistered users
-  def send_welcome_text_message(phone_number)
-    set_twilio_client
-    @twilio_client.account.sms.messages.create(
-      from: TextMessage::TWILIO_PHONE_NUMBER,
-      to: phone_number,
-      body: TextMessage::UNREGISTERED_WELCOME 
-      )    
-  end
+    # for unregistered users
+    def send_welcome_text_message(phone_number)
+      set_twilio_client
+      @twilio_client.account.sms.messages.create(
+        from: TextMessage::TWILIO_PHONE_NUMBER,
+        to: phone_number,
+        body: TextMessage::UNREGISTERED_WELCOME 
+        )    
+    end
 
-  def execute_text_message_worker(text_message_id, send_time, user_id)
-    iron_worker = IronWorkerNG::Client.new
-    iron_worker.schedules.create("Master", { 
-        :text_message_id => text_message_id,
-        :user_id => user_id,
-        :start_at => send_time,
-        :run_every => 3600 * 24,
-        :run_times => 365,
-        :database => Rails.configuration.database_configuration[Rails.env]
-      })
-  end
+    def execute_text_message_worker(text_message_id, send_time, user_id)
+      iron_worker = IronWorkerNG::Client.new
+      iron_worker.schedules.create("Master", { 
+          :text_message_id => text_message_id,
+          :user_id => user_id,
+          :start_at => send_time,
+          :run_every => 3600 * 24,
+          :run_times => 365,
+          :database => Rails.configuration.database_configuration[Rails.env]
+        })
+    end
 
-  def update_text_message_user_id(text_message)
-    text_message.user_id = resource.id
-    text_message.save
-  end
+    def update_text_message_user_id(text_message)
+      text_message.user_id = resource.id
+      text_message.save
+    end
 
-  def sanitize_phone_number(text_message)
-    phone_number = text_message.phone_number
-    phone_number.gsub!("-", "")
-    phone_number.prepend("+1")
-    text_message.update_column("phone_number", phone_number)
-  end
+    def sanitize_phone_number(text_message)
+      phone_number = text_message.phone_number
+      phone_number.gsub!("-", "")
+      phone_number.prepend("+1")
+      text_message.update_column("phone_number", phone_number)
+    end
 end
   
