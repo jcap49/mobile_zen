@@ -29,6 +29,13 @@ def send_sms
   )  
 end
 
+def is_registered?
+  user = User.find_by_id(params['user_id'])
+  user.registered
+end
+
 setup_database
-send_sms
+unless is_registered? == false
+  send_sms
+end
 

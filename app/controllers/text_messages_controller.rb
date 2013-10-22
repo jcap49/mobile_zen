@@ -70,22 +70,42 @@ class TextMessagesController < ApplicationController
       params.require(:text_message).permit(:phone_number, :text_body, :send_time, :user_id)
     end
 
-    def send_welcome_text_message(phone_number)
-      set_twilio_client
-      if TextMessage.find_by_phone_number(phone_number) == nil
-        @twilio_client.account.sms.messages.create(
-          from: TextMessage::TWILIO_PHONE_NUMBER,
-          to: phone_number,
-          body: TextMessage::UNREGISTERED_WELCOME 
-          )
-      elsif TextMessage.find_by_phone_number(phone_number) != nil
-        @twilio_client.account.sms.messages.create(
-          from: TextMessage::TWILIO_PHONE_NUMBER,
-          to: phone_number,
-          body: TextMessage::REGISTERED_WELCOME
-          )
-      end
+    def set_twilio_client
+      @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
     end
+
+    # commented these two methods out as they've been
+    # moved to the custom_users controller;
+    # will delete once i've sorted out the refactoring
+    # completely
+    
+    # def send_welcome_text_message(phone_number)
+    #   set_twilio_client
+    #   if TextMessage.find_by_phone_number(phone_number) == nil
+    #     @twilio_client.account.sms.messages.create(
+    #       from: TextMessage::TWILIO_PHONE_NUMBER,
+    #       to: phone_number,
+    #       body: TextMessage::UNREGISTERED_WELCOME 
+    #       )
+    #   elsif TextMessage.find_by_phone_number(phone_number) != nil
+    #     @twilio_client.account.sms.messages.create(
+    #       from: TextMessage::TWILIO_PHONE_NUMBER,
+    #       to: phone_number,
+    #       body: TextMessage::REGISTERED_WELCOME
+    #       )
+    #   end
+    # end
+
+    # def execute_text_message_worker(text_message_id, send_time)
+    #   iron_worker = IronWorkerNG::Client.new
+    #   iron_worker.schedules.create("Master", { 
+    #       :text_message_id => text_message_id,
+    #       :start_at => send_time,
+    #       :run_every => 3600 * 24,
+    #       :run_times => 365,
+    #       :database => Rails.configuration.database_configuration[Rails.env]
+    #     })
+    # end
 
     def update_registration(phone_number)
       text_message = TextMessage.find_by_phone_number(phone_number)
@@ -93,21 +113,6 @@ class TextMessagesController < ApplicationController
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
       user.save!
-    end
-
-    def execute_text_message_worker(text_message_id, send_time)
-      iron_worker = IronWorkerNG::Client.new
-      iron_worker.schedules.create("Master", { 
-          :text_message_id => text_message_id,
-          :start_at => send_time,
-          :run_every => 3600 * 24,
-          :run_times => 365,
-          :database => Rails.configuration.database_configuration[Rails.env]
-        })
-    end
-
-    def set_twilio_client
-      @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
     end
 
     def parse_text_message_body(text_message_body, phone_number)

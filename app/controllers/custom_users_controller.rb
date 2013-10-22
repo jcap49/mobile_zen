@@ -3,6 +3,9 @@ class CustomUsersController < Devise::RegistrationsController
     super
   end
 
+  # extended devise reg controller to allow for submission 
+  # of text message object then user registration
+
   def create
     build_resource(sign_up_params)
 
@@ -10,6 +13,12 @@ class CustomUsersController < Devise::RegistrationsController
       @text_message = TextMessage.find_by_id(session[:text_message_id])
       @text_message.user_id = resource.id
       @text_message.save
+
+      # stuck these two methods here to handle text message
+      # actions upon successful user reg
+
+      send_welcome_text_message(text_message_params[:phone_number])
+      execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
 
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
@@ -30,6 +39,39 @@ class CustomUsersController < Devise::RegistrationsController
 
   def sign_up_params
     devise_parameter_sanitizer.sanitize(:sign_up)
+  end
+
+  def set_twilio_client
+    @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+  end
+
+  def send_welcome_text_message(phone_number)
+    set_twilio_client
+    if TextMessage.find_by_phone_number(phone_number) == nil
+      @twilio_client.account.sms.messages.create(
+        from: TextMessage::TWILIO_PHONE_NUMBER,
+        to: phone_number,
+        body: TextMessage::UNREGISTERED_WELCOME 
+        )
+    elsif TextMessage.find_by_phone_number(phone_number) != nil
+      @twilio_client.account.sms.messages.create(
+        from: TextMessage::TWILIO_PHONE_NUMBER,
+        to: phone_number,
+        body: TextMessage::REGISTERED_WELCOME
+        )
+    end
+  end
+
+  def execute_text_message_worker(text_message_id, send_time, user_id)
+    iron_worker = IronWorkerNG::Client.new
+    iron_worker.schedules.create("Master", { 
+        :text_message_id => text_message_id,
+        :user_id => user_id,
+        :start_at => send_time,
+        :run_every => 3600 * 24,
+        :run_times => 365,
+        :database => Rails.configuration.database_configuration[Rails.env]
+      })
   end
 end
   
