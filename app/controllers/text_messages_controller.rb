@@ -5,11 +5,12 @@ class TextMessagesController < ApplicationController
     if user_signed_in?
       unless TextMessage.find_by_user_id(current_user.id) != nil
         @text_message = TextMessage.new(text_message_params)
+        @text_message.user_id = current_user.id
 
         if @text_message.save
-          redirect_to root_path, notice: "Text message successfully created."
+          redirect_to root_path, notice: "Text message successfully created." and return
         else
-          redirect_to root_path, notice: "Whoops something went wrong - give it another go."
+          redirect_to root_path, notice: "Whoops something went wrong - give it another go." and return
         end
       end
       redirect_to root_path, notice: "Sorry - only one text message per person. For now. :)"
