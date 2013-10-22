@@ -8,6 +8,7 @@ class TextMessagesController < ApplicationController
         @text_message.user_id = current_user.id
 
         if @text_message.save
+          send_welcome_text_message(@text_message.phone_number)
           redirect_to root_path, notice: "Text message successfully created." and return
         else
           redirect_to root_path, notice: "Whoops something went wrong - give it another go." and return
@@ -64,5 +65,15 @@ class TextMessagesController < ApplicationController
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
       user.save!
+    end
+
+    # for previously registered users
+    def send_welcome_text_message(phone_number)
+      set_twilio_client
+      @twilio_client.account.sms.messages.create(
+        from: TextMessage::TWILIO_PHONE_NUMBER,
+        to: phone_number,
+        body: TextMessage::REGISTERED_WELCOME 
+        )    
     end
 end

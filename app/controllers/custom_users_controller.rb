@@ -45,6 +45,7 @@ class CustomUsersController < Devise::RegistrationsController
     @text_message = TextMessage.find(session[:text_message_id])
   end
 
+  # for unregistered users
   def send_welcome_text_message(phone_number)
     set_twilio_client
     @twilio_client.account.sms.messages.create(
