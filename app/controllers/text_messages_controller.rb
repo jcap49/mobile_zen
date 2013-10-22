@@ -2,14 +2,17 @@ class TextMessagesController < ApplicationController
   before_action :set_text_message, only: [:show, :edit, :update, :destroy]
 
   def create  
+    if user_signed_in?
+      redirect_to root_path, notice: "Sorry - only one text message per person. For now. :)"
+      return
+    end
+
     @text_message = TextMessage.new(text_message_params)
     @text_message.user_id = -1
 
-    # write method to check if user already has a text 
-    # message created; if so return error
-
     if @text_message.save
       session[:text_message_id] = @text_message.id
+      sanitize_phone_number(@text_message.phone_number)
       redirect_to new_user_registration_path
     else
       redirect_to root_path, notice: "Whoops something went wrong - give it another go."
@@ -55,5 +58,14 @@ class TextMessagesController < ApplicationController
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
       user.save!
+    end
+
+    def sanitize_phone_number(phone_number)
+      text_message = TextMessage.find_by_phone_number(phone_number)
+      phone_number.gsub!("-", "")
+      phone_number.prepend("+1")
+      text_message.phone_number = phone_number
+      text_message.save(validate: false)
+      # text_message.update_attribute("phone_number", phone_number)
     end
 end
