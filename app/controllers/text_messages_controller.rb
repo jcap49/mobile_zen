@@ -14,27 +14,20 @@ class TextMessagesController < ApplicationController
 
 
 
-  def create
-    if user_signed_in?
-      @text_message = current_user.text_messages.build(text_message_params)
-      if @text_message.save
-        redirect_to root_path, notice: 'Text message was successfully created.'
-        # execute_text_message_worker(@text_message.id, @text_message.send_time)
-      else
-        redirect_to root_path, notice: 'Whoops something went wrong.'
-      end
-    else
-      @text_message = TextMessage.new(text_message_params)
-      @text_message.user_id = -1
+  def create  
+    @text_message = TextMessage.new(text_message_params)
+    @text_message.user_id = -1
 
-      if @text_message.save
-        session[:text_message_id] = @text_message.id
-        redirect_to new_user_registration_path
-        send_welcome_text_message(text_message_params[:phone_number])
-        # execute_text_message_worker(@text_message.id, @text_message.send_time)
-      else
-        redirect_to root_path, notice: "Whoops something went wrong - give it another go."
-      end
+    # write method to check if user already has a text 
+    # message created; if so return error
+
+    if @text_message.save
+      session[:text_message_id] = @text_message.id
+      redirect_to new_user_registration_path
+      # send_welcome_text_message(text_message_params[:phone_number])
+      # execute_text_message_worker(@text_message.id, @text_message.send_time)
+    else
+      redirect_to root_path, notice: "Whoops something went wrong - give it another go."
     end
   end
 
@@ -78,7 +71,7 @@ class TextMessagesController < ApplicationController
     # moved to the custom_users controller;
     # will delete once i've sorted out the refactoring
     # completely
-    
+
     # def send_welcome_text_message(phone_number)
     #   set_twilio_client
     #   if TextMessage.find_by_phone_number(phone_number) == nil
