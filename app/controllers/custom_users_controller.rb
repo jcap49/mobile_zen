@@ -51,7 +51,7 @@ class CustomUsersController < Devise::RegistrationsController
         from: TextMessage::TWILIO_PHONE_NUMBER,
         to: phone_number,
         body: TextMessage::UNREGISTERED_WELCOME 
-        )    
+      )    
     end
 
     def execute_text_message_worker(text_message_id, send_time, user_id)

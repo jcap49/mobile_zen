@@ -3,19 +3,20 @@
     %p
       -unless user_signed_in?
         =link_to 'login', new_user_session_path
-      =link_to 'logout', destroy_user_session_path, :method => "delete"
+      -if user_signed_in?
+        =link_to 'logout', destroy_user_session_path, :method => "delete"
     %h1.subheader#landing_title
-      Welcome to Bonsai 
+      Welcome to Bonsai. 
     %h3.subheader
       Your daily cause for pause.
     %p#slug_description
-      Let's face it - we all lead busy lives. Bonsai is a service that delivers an SMS daily with a question or comment intended to give you reason to stop and reflect for a moment or three.
+      We deliver a daily SMS with a question or comment intended to give you reason to stop and reflect for a moment or three.
 
   #landing_image
     =image_tag 'bonsai1.jpg'
   #info_prompt
     %p 
-      Just need a little bit of info from you first... 
+      There's just a little bit of info needed first... 
   #landing_form
     / =render 'devise/registrations/form', locale: {user: User.new, text_message: TextMessage.new}
     =render 'text_messages/form', locale: {text_message: TextMessage.new}
