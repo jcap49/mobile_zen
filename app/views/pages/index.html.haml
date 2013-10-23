@@ -1,10 +1,12 @@
 .section
+  #login_container
+    -unless user_signed_in?
+      %button.tiny.secondary#login
+        =link_to 'Login', new_user_session_path
+    -if user_signed_in?
+      %button.tiny.secondary#logout
+        =link_to 'Logout', destroy_user_session_path, :method => "delete"
   .landing_header
-    %p
-      -unless user_signed_in?
-        =link_to 'login', new_user_session_path
-      -if user_signed_in?
-        =link_to 'logout', destroy_user_session_path, :method => "delete"
     %h1.subheader#landing_title
       Welcome to Bonsai. 
     %h3.subheader
