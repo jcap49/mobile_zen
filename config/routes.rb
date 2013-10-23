@@ -6,7 +6,6 @@ MobileZen::Application.routes.draw do
 
   resources :text_messages, except: [:index, :show, :edit, :update]
 
-  post 'sign_up' => 'custom_users#new'
   get 'about' => 'pages#about'
   post 'process_text_message' => 'text_messages#process_text_message'
 

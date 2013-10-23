@@ -19,8 +19,6 @@ gem 'rails_12factor', group: :production
 gem 'devise'
 gem 'localtunnel'
 
-
-
 group :doc do
   gem 'sdoc', require: false
 end
@@ -36,6 +34,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'
+  gem 'factory_girl_rails'
 end
 
 
