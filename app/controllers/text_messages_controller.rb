@@ -26,7 +26,7 @@ class TextMessagesController < ApplicationController
     else
       redirect_to root_path, notice: "Whoops something went wrong - give it another go."
     end
-  end
+  end 
 
   def destroy(phone_number)
     text_message = TextMessage.find_by_phone_number(phone_number)

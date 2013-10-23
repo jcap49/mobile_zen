@@ -1,15 +1,23 @@
-= form_for @user, url: register_user_path do |f|
-  - if @user.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
-      %%ul 
-        - @user.errors.full_messages.each do |msg|
-          %li= msg
-  .field
-    = f.text_field :email, placeholder: 'Email'
-  .field#send_time.time.ui-timepicker-input
-    = f.password_field :password, placeholder: 'Password'
-  .field
-    = f.password_field :password_confirmation, placeholder: 'Password Confirmation'
-  .actions
-    = f.submit class: 'button', id: 'landing_submit', value: 'Sign up'
+.section#new_registration
+  %h1.subheader#reg_banner
+    Bonsai
+  %h4.subheader#reg_sub_header
+    Sign up for an account below.
+  #reg_image
+    =image_tag 'bonsai1.jpg'
+  #reg_form
+    = form_for @user, url: register_user_path do |f|
+      - if @user.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+          %%ul 
+            - @user.errors.full_messages.each do |msg|
+              %li= msg
+      .field
+        = f.text_field :email, placeholder: 'Email'
+      .field#send_time.time.ui-timepicker-input
+        = f.password_field :password, placeholder: 'Password'
+      .field
+        = f.password_field :password_confirmation, placeholder: 'Password Confirmation'
+      .actions
+        = f.submit class: 'button', id: 'landing_submit', value: 'Sign up'

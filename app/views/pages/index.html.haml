@@ -1,8 +1,9 @@
 .section
   .landing_header
     %p
+      -unless user_signed_in?
+        =link_to 'login', new_user_session_path
       =link_to 'logout', destroy_user_session_path, :method => "delete"
-      =link_to 'login', new_user_session_path
     %h1.subheader#landing_title
       Welcome to Bonsai 
     %h3.subheader
@@ -12,14 +13,9 @@
 
   #landing_image
     =image_tag 'bonsai1.jpg'
-
-
-
   #info_prompt
     %p 
       Just need a little bit of info from you first... 
-  
-
   #landing_form
     / =render 'devise/registrations/form', locale: {user: User.new, text_message: TextMessage.new}
     =render 'text_messages/form', locale: {text_message: TextMessage.new}

@@ -2,44 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-// new (landing page)
-
-
-
-//Main Section
-
-
-
-.landing_header {
-  text-align: center;
-  margin-top: 3%;
-  margin-bottom: 3%;
-  position: relative;
-  
-}
-
-#landing_title {
-  line-height: .5;
-}
-
-#landing_image {
-  margin-top: 5%;
-
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 80px;
-  }
-}
-
-#slug_description {
-  position: absolute;
-  margin: auto;
-  width: 50%;
-  font-family: 'Titillium Web', sans-serif;
-}
+// miscellaneous styling
 
 // Font Styles
 
@@ -49,11 +12,47 @@ font-family: 'Gochi Hand', cursive;
 font-family: 'Titillium Web', sans-serif;
 */
 
+// flash message/notice/error styling
+
+.flash.notice {
+  background: #3672F5;
+
+  p {
+    text-align: center;
+  }
+}
 
 
+// Main Section
 
+.landing_header {
+  text-align: center;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  position: relative;
+}
 
-// Sign-up Form Styles
+#landing_title {
+  line-height: .5;
+}
+
+#landing_image {
+  margin-top: 2%;
+
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+  }
+}
+
+#slug_description {
+  margin: auto;
+  width: 50%;
+}
+
+// Sign-up Form Styles - New Text Message
 
 
 #info_prompt {
@@ -78,6 +77,45 @@ font-family: 'Titillium Web', sans-serif;
   bottom: 0;
 }
 
+// Sign-up Form Styles - New User Reg
+
+#new_registration {
+  margin: auto;
+  
+  #reg_banner {
+    text-align: center;
+  }
+
+  #reg_sub_header {
+    text-align: center;
+  }
+  
+  #reg_image {
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 3%;
+    }
+  }
+
+  #reg_form {
+    text-align: center;
+
+    input {
+      text-align: center;
+      display: inline-block;
+      width: 30%;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+  }
+}
+
+
+// Sign-up Form Styles - User Signin
+
 #landing_form {
   
   // margin: auto;
@@ -86,6 +124,6 @@ font-family: 'Titillium Web', sans-serif;
   input {
     text-align: center;
     display: inline-block;
-
+    border-radius: 5px;
   }
 }
