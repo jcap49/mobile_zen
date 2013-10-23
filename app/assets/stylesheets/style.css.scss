@@ -52,8 +52,9 @@ font-family: 'Titillium Web', sans-serif;
   width: 50%;
 }
 
-// Sign-up Form Styles - New Text Message
 
+
+// Sign-up Form Styles - New Text Message
 
 #info_prompt {
   margin-top: 3%;
@@ -75,6 +76,18 @@ font-family: 'Titillium Web', sans-serif;
 #disclaimer {
   position: absolute;
   bottom: 0;
+}
+
+#landing_form {
+  
+  // margin: auto;
+  text-align: center;
+
+  input {
+    text-align: center;
+    display: inline-block;
+    border-radius: 5px;
+  }
 }
 
 // Sign-up Form Styles - New User Reg
@@ -116,14 +129,36 @@ font-family: 'Titillium Web', sans-serif;
 
 // Sign-up Form Styles - User Signin
 
-#landing_form {
+#new_session {
+  margin: auto;
   
-  // margin: auto;
-  text-align: center;
-
-  input {
+  #session_banner {
     text-align: center;
-    display: inline-block;
-    border-radius: 5px;
+  }
+
+  #session_sub_header {
+    text-align: center;
+  }
+  
+  #session_image {
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 3%;
+    }
+  }
+
+  #session_form {
+    text-align: center;
+
+    input {
+      text-align: center;
+      display: inline-block;
+      width: 30%;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
   }
 }

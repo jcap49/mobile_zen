@@ -1,10 +1,23 @@
-=form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  =f.email_field :email, autofocus: true, placeholder: "Email"
-  =f.password_field :password, placeholder: "Password"
+.section#new_session
+  %h1.subheader#session_banner
+    Bonsai
+  %h4.subheader#session_sub_header
+    Sign in below.
+  #session_image
+    =image_tag 'bonsai1.jpg'
+  #session_form
+    =form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      - if resource.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+          %ul 
+            - user.errors.full_messages.each do |msg|
+              %li= msg
+      .field
+        = f.text_field :email, placeholder: 'Email'
+      .field
+        = f.password_field :password, placeholder: 'Password'
+      .actions
+        = f.submit class: 'button', id: 'new_session_submit', value: 'Sign in'
 
-  -if devise_mapping.rememberable?
-    f.check_box :remember_me
-
-  =f.submit "Sign in"
-
-  
+      
