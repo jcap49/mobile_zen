@@ -2,25 +2,15 @@ class TextMessagesController < ApplicationController
   before_action :set_text_message, only: [:show, :edit, :update, :destroy]
 
   def create  
-    if user_signed_in?
-      unless TextMessage.find_by_user_id(current_user.id) != nil
-        @text_message = TextMessage.new(text_message_params)
-        @text_message.user_id = current_user.id
-
-        if @text_message.save
-          send_welcome_text_message(@text_message.phone_number)
-          redirect_to root_path, notice: "Text message successfully created." and return
-        else
-          redirect_to root_path, notice: "Whoops something went wrong - give it another go." and return
-        end
-      end
-      redirect_to root_path, notice: "Sorry - only one text message per person. For now. :)"
-    end
-
     @text_message = TextMessage.new(text_message_params)
     @text_message.user_id = -1
 
-    if @text_message.save
+    if user_signed_in? && @text_message.save
+      @text_message.user_id = current_user.id
+      @text_message.save
+      send_registered_welcome_text_message(@text_message.phone_number)
+      redirect_to root_path, notice: "Text message successfully created."
+    elsif @text_message.save 
       session[:text_message_id] = @text_message.id
       redirect_to new_user_registration_path
     else
@@ -49,6 +39,10 @@ class TextMessagesController < ApplicationController
       params.require(:text_message).permit(:phone_number, :text_body, :send_time, :user_id)
     end
 
+    def set_twilio_client
+      @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+    end
+
     def parse_text_message_body(text_message_body, phone_number)
       if text_message_body.downcase == 'yes' 
         update_registration(phone_number)
@@ -68,7 +62,7 @@ class TextMessagesController < ApplicationController
     end
 
     # for previously registered users
-    def send_welcome_text_message(phone_number)
+    def send_registered_welcome_text_message(phone_number)
       set_twilio_client
       @twilio_client.account.sms.messages.create(
         from: TextMessage::TWILIO_PHONE_NUMBER,

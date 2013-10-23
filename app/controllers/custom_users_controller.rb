@@ -12,7 +12,7 @@ class CustomUsersController < Devise::RegistrationsController
       set_text_message
       update_text_message_user_id(@text_message)
       sanitize_phone_number(@text_message)
-      send_welcome_text_message(@text_message.phone_number)
+      send_unregistered_welcome_text_message(@text_message.phone_number)
       execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
 
       if resource.active_for_authentication?
@@ -47,7 +47,7 @@ class CustomUsersController < Devise::RegistrationsController
     end
 
     # for unregistered users
-    def send_welcome_text_message(phone_number)
+    def send_unregistered_welcome_text_message(phone_number)
       set_twilio_client
       @twilio_client.account.sms.messages.create(
         from: TextMessage::TWILIO_PHONE_NUMBER,
