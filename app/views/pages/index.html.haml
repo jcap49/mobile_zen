@@ -13,12 +13,12 @@
       Your daily cause for pause.
     %p#slug_description
       We deliver a daily SMS with a question or comment intended to give you reason to stop and reflect for a moment or three.
-
   #landing_image
     =image_tag 'bonsai1.jpg'
-  #info_prompt
-    %p 
-      There's just a little bit of info needed first... 
+  -unless user_signed_in?
+    #info_prompt
+      %p 
+        There's just a little bit of info needed first... 
   #landing_form
     / =render 'devise/registrations/form', locale: {user: User.new, text_message: TextMessage.new}
     =render 'text_messages/form', locale: {text_message: TextMessage.new}

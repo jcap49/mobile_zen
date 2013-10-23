@@ -18,7 +18,7 @@
 $(document).foundation();
 
 $(function() {
-  $('#close').on('click', function(){
+  $('.close').on('click', function(){
     $('.flash.notice').hide();
   });
 });

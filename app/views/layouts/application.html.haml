@@ -18,17 +18,16 @@
   %title= content_for?(:title) ? yield(:title) : "Bonsai"
   
   = stylesheet_link_tag "application"
+  = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,600,200italic,400italic|Bubblegum+Sans|Gochi+Hand|Titillium+Web:400,200,200italic,400italic,600"
   = javascript_include_tag "vendor/custom.modernizr"
   = csrf_meta_tag
-
-  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,600,200italic,400italic|Bubblegum+Sans|Gochi+Hand|Titillium+Web:400,200,200italic,400italic,600' rel='stylesheet' type='text/css'>
 
 %body
   .row
     -flash.each do |name, msg|
       %div{ class: "flash #{name}" }
         %p
-          %span#close
+          %span.close
             &#215;
           =msg.html_safe
     = yield
