@@ -25,6 +25,8 @@ class CustomUsersController < Devise::RegistrationsController
         respond_with resource, :location => after_inactive_sign_up_path_for(resource)
       end
     else
+      set_text_message
+      @text_message.destroy
       clean_up_passwords resource
       respond_with resource
     end
