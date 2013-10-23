@@ -16,10 +16,18 @@ font-family: 'Titillium Web', sans-serif;
 
 .flash.notice {
   background: #3672F5;
+  color: white;
 
   p {
     text-align: center;
   }
+}
+
+#close {
+  float: left;
+  margin-left: 0.5%;
+  margin-top: -0.5%;
+  cursor: pointer;
 }
 
 

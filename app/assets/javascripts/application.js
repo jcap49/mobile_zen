@@ -16,3 +16,9 @@
 //= require_tree .
 
 $(document).foundation();
+
+$(function() {
+  $('#close').on('click', function(){
+    $('.flash.notice').hide();
+  });
+});

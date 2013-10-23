@@ -28,6 +28,8 @@
     -flash.each do |name, msg|
       %div{ class: "flash #{name}" }
         %p
+          %span#close
+            &#215;
           =msg.html_safe
     = yield
 
