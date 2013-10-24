@@ -19,7 +19,6 @@
     #info_prompt
       %p 
         There's just a little bit of info needed first... 
-  
   -if user_signed_in? && current_user.max_text_message_limit?(current_user.id)
     #text_limit
       %p#text_limit_message

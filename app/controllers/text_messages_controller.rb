@@ -1,5 +1,5 @@
 class TextMessagesController < ApplicationController
-  before_action :set_text_message, only: [:index, :show, :edit, :update, :destroy]
+  # before_action :set_text_message, only: [:index, :show, :update, :destroy]
 
   def index
   end
@@ -25,9 +25,16 @@ class TextMessagesController < ApplicationController
     end
   end 
 
+  # finish implementing method
+
+  # def edit(phone_number, body)
+  #   set_text_message_via_twilio(phone_number)
+  #   @text_message.update_attribute(body: body)
+  # end
+
   def destroy(phone_number)
-    text_message = TextMessage.find_by_phone_number(phone_number)
-    text_message.destroy
+    set_text_message_via_twilio(phone_number)
+    @text_message.destroy
     redirect_to root_path
   end
 
@@ -41,6 +48,9 @@ class TextMessagesController < ApplicationController
       @text_message = TextMessage.find(params[:id])
     end
 
+    def set_text_message_via_twilio(phone_number)
+      @text_message = TextMessage.find_by_phone_number(phone_number)
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def text_message_params
       params.require(:text_message).permit(:phone_number, :text_body, :send_time, :user_id)
@@ -57,6 +67,9 @@ class TextMessagesController < ApplicationController
       elsif text_message_body.downcase == 'delete'
         destroy(phone_number)
         render 'unsubscribe.xml.erb', content_type: 'text/xml'
+      # elsif text_message_body.downcase == 'edit'
+      #   edit(phone_number)
+      #   render 'edit.xml.erb', content_type: 'text/xml'
       end   
     end
 
