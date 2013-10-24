@@ -67,9 +67,6 @@ class TextMessagesController < ApplicationController
       elsif text_message_body.downcase == 'delete'
         destroy(phone_number)
         render 'unsubscribe.xml.erb', content_type: 'text/xml'
-      # elsif text_message_body.downcase == 'edit'
-      #   edit(phone_number)
-      #   render 'edit.xml.erb', content_type: 'text/xml'
       end   
     end
 
