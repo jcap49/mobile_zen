@@ -76,6 +76,7 @@ class TextMessagesController < ApplicationController
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
       user.save!
+      execute_text_message_worker(text_message.id, text_message.send_time, text_message.user_id)
     end
 
     # for previously registered users
@@ -86,5 +87,17 @@ class TextMessagesController < ApplicationController
         to: phone_number,
         body: TextMessage::REGISTERED_WELCOME 
         )    
+    end
+
+    def execute_text_message_worker(text_message_id, send_time, user_id)
+      iron_worker = IronWorkerNG::Client.new
+      iron_worker.schedules.create("Master", { 
+          :text_message_id => text_message_id,
+          :user_id => user_id,
+          :start_at => send_time,
+          :run_every => 3600 * 24,
+          :run_times => 365,
+          :database => Rails.configuration.database_configuration[Rails.env]
+        })
     end
 end
