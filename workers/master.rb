@@ -21,7 +21,7 @@ end
 def send_sms
   twilio_client = Twilio::REST::Client.new(@account_sid, @auth_token)
   text_message = TextMessage.find_by_id(params['text_message_id'])
-  return if text_message.nil?
+  # return if text_message.nil?
   twilio_client.account.sms.messages.create(
     from: TextMessage::TWILIO_PHONE_NUMBER,
     to: text_message.phone_number,
@@ -29,13 +29,6 @@ def send_sms
   )  
 end
 
-def is_registered?
-  user = User.find_by_id(params['user_id'])
-  user.registered
-end
-
 setup_database
-if is_registered? 
-  send_sms
-end
+send_sms
 

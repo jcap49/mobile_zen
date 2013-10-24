@@ -12,7 +12,7 @@ class CustomUsersController < Devise::RegistrationsController
       set_text_message
       update_text_message_user_id(@text_message)
       sanitize_phone_number(@text_message)
-      send_unregistered_welcome_text_message(@text_message.phone_number)
+      # send_unregistered_welcome_text_message(@text_message.phone_number)
 
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
@@ -52,7 +52,7 @@ class CustomUsersController < Devise::RegistrationsController
         body: TextMessage::UNREGISTERED_WELCOME 
       )    
     end
-
+    
     def update_text_message_user_id(text_message)
       text_message.user_id = resource.id
       text_message.save
