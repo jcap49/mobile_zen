@@ -1,5 +1,12 @@
 class TextMessagesController < ApplicationController
-  before_action :set_text_message, only: [:show, :edit, :update, :destroy]
+  before_action :set_text_message, only: [:index, :show, :edit, :update, :destroy]
+
+  def index
+  end
+
+  def new
+    @text_message = TextMessage.new(params[:text_message])
+  end
 
   def create  
     @text_message = TextMessage.new(text_message_params)

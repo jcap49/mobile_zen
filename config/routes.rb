@@ -9,6 +9,6 @@ MobileZen::Application.routes.draw do
   get 'about' => 'pages#about'
   post 'process_text_message' => 'text_messages#process_text_message'
 
-  root to: 'pages#index'
+  root to: 'text_messages#new'
 
 end

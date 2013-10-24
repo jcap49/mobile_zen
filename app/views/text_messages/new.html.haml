@@ -1,29 +1,29 @@
-
-.container
+.section
+  #login_container
+    -unless user_signed_in?
+      %button.tiny.secondary#login
+        =link_to 'Login', new_user_session_path
+    -if user_signed_in?
+      %button.tiny.secondary#logout
+        =link_to 'Logout', destroy_user_session_path, :method => "delete"
   .landing_header
     %h1.subheader#landing_title
-      Welcome to Bonsai 
+      Welcome to Bonsai. 
     %h3.subheader
       Your daily cause for pause.
     %p#slug_description
-      Let's face it - we all lead busy lives. Bonsai is a service that delivers an SMS daily with a question or comment intended to give you reason to stop and reflect for a moment or three.
-
+      We deliver a daily SMS with a question or comment intended to give you reason to stop and reflect for a moment or three.
   #landing_image
     =image_tag 'bonsai1.jpg'
-
-  / %h5.subheader#example_texts
-  /   %u Points to ponder for the day:
-  /   %ul
-  /     %li What do I want to get accomplished?
-  /     %li Who should I catch up with?
-  /     %li Did I meditate for twenty minutes?
-
-  #info_prompt
-    %p 
-      Just need a little bit of info from you first... 
-  #landing_form
-    =render 'form' 
-
-  / #disclaimer
-  /   %p
-  /     Some cool disclaimer text
+  -unless user_signed_in?
+    #info_prompt
+      %p 
+        There's just a little bit of info needed first... 
+  
+  -if user_signed_in? && current_user.max_text_message_limit?(current_user.id)
+    #text_limit
+      %p#text_limit_message
+        Unfortunately there's a one text message limit for user accounts at the moment. Feel free to reply with 'DELETE' to delete your current message - you can then create a new message of your choosing.
+  -else  
+    #landing_form
+      =render 'text_messages/form'
