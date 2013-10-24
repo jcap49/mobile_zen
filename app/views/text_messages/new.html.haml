@@ -23,7 +23,7 @@
   -if user_signed_in? && current_user.max_text_message_limit?(current_user.id)
     #text_limit
       %p#text_limit_message
-        Unfortunately there's a one text message limit for user accounts at the moment. Feel free to reply with 'DELETE' to delete your current message - you can then create a new message of your choosing.
+        Cool - you're all set to go with your first text message. Unfortunately there's a one text message limit for user accounts at the moment. Feel free to reply with 'DELETE' to delete your current message - you can then create a new message of your choosing.
   -else  
     #landing_form
       =render 'text_messages/form'
