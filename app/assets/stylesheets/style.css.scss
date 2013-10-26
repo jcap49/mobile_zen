@@ -88,6 +88,20 @@ font-family: 'Titillium Web', sans-serif;
   border-radius: 5px;
 }
 
+.alert-box.success {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.alert-box.alert {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
 // Main Section
 
 .landing_header {
