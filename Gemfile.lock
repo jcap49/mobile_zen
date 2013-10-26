@@ -190,6 +190,8 @@ GEM
       json (>= 1.1.3)
       rdoc (~> 3.10)
     slop (3.4.6)
+    sms-spec (0.1.7)
+      rspec
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -249,6 +251,7 @@ DEPENDENCIES
   rspec-rails (~> 2.0)
   sass-rails (~> 4.0.0)
   sdoc
+  sms-spec
   thin
   twilio-ruby
   uglifier (>= 1.3.0)

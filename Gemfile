@@ -32,6 +32,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'sms-spec'
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'
