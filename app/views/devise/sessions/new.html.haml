@@ -12,10 +12,10 @@
             - user.errors.full_messages.each do |msg|
               %li= msg
       .field
-        = f.text_field :email, placeholder: 'Email'
+        = f.text_field :email, placeholder: 'Email', label: false
       .field
-        = f.password_field :password, placeholder: 'Password'
+        = f.password_field :password, placeholder: 'Password', label: false
       .actions
-        = f.submit class: 'button', id: 'new_session_submit', value: 'Sign in'
+        = f.submit class: 'button', id: 'new_session_submit', value: 'Sign in', label: false
 
       
