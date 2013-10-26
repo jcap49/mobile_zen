@@ -1,19 +1,13 @@
 = form_for @text_message do |f|
-  - if @text_message.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@text_message.errors.count, "error")} prohibited this text_message from being saved:"
-      %ul 
-        - @text_message.errors.full_messages.each do |msg|
-          %li= msg
   .field
     / = f.label "Your question:"
-    = f.text_field :text_body, placeholder: 'What 3 things am I thankful for today?'
+    = f.text_field :text_body, placeholder: 'What 3 things am I thankful for today?', label: false
   .field#send_time.time.ui-timepicker-input
     / = f.label "Time of delivery each day:"
-    = f.text_field :send_time, placeholder: '9:00am'
+    = f.text_field :send_time, placeholder: '9:00am',  label: false
   .field
     / = f.label "Phone number:"
-    = f.text_field :phone_number, placeholder: '315-749-8433'
+    = f.text_field :phone_number, placeholder: '315-749-8433',  label: false
   .actions
     = f.submit class: 'button', id: 'landing_submit', value: 'Text me!'
 

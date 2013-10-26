@@ -21,7 +21,7 @@ class TextMessagesController < ApplicationController
       session[:text_message_id] = @text_message.id
       redirect_to new_user_registration_path
     else
-      redirect_to root_path, notice: "Whoops something went wrong - give it another go."
+      render action: 'new', notice: "Whoops something went wrong - give it another go."
     end
   end 
 
@@ -89,6 +89,8 @@ class TextMessagesController < ApplicationController
         )    
     end
 
+    # need to refactor to use iron_worker scheduler
+    # once it is fixed; broken as of 10/26
     def execute_text_message_worker(text_message_id, send_time, user_id)
       iron_worker = IronWorkerNG::Client.new
       iron_worker.tasks.create("Master", { 

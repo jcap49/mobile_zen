@@ -61,6 +61,9 @@ GEM
       bundler (~> 1.0)
       rails (>= 3, < 5)
     formatador (0.2.4)
+    foundation_rails_helper (0.4)
+      actionpack (>= 3.0)
+      railties (>= 3.0)
     guard (1.8.2)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
@@ -229,6 +232,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   figaro
+  foundation_rails_helper
   guard
   guard-bundler
   guard-rspec

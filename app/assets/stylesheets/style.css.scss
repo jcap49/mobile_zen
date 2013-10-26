@@ -79,6 +79,11 @@ font-family: 'Titillium Web', sans-serif;
   cursor: pointer;
 }
 
+.error.medium.input-text.error {
+  width: 30%;
+  margin: auto;
+  display: block;
+}
 
 // Main Section
 
@@ -163,6 +168,7 @@ font-family: 'Titillium Web', sans-serif;
     text-align: center;
     display: inline-block;
     border-radius: 5px;
+    margin-top: 2%;
   }
 }
 
@@ -198,6 +204,7 @@ font-family: 'Titillium Web', sans-serif;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
+      margin-top: 2%;
     }
   }
 }

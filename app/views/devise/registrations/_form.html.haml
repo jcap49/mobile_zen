@@ -1,24 +1,11 @@
-= form_for @user, url: user_registration_path do |f|
-  / - if @user.errors.any?
-  /   #error_explanation
-  /     %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
-  /     / %ul 
-  /     /   - @user.errors.full_messages.each do |msg|
-  /     /     %li= msg
-
+= form_for @user, url: register_user_path do |f|
   .field
-    = f.text_field :email, placeholder: 'Email'
+    = f.text_field :email, placeholder: 'Email', label: false
   .field#send_time.time.ui-timepicker-input
-    = f.password_field :password, placeholder: 'Password'
+    = f.password_field :password, placeholder: 'Password', label: false
   .field
-    = f.password_field :password_confirmation, placeholder: 'Password Confirmation'  
-
-  = fields_for :text_messages do |text_messages_form|
-    .field
-      = text_messages_form.text_field :text_body, placeholder: 'What 3 things am I thankful for today?'
-    .field#send_time.time.ui-timepicker-input
-      = text_messages_form.text_field :send_time, placeholder: '9:00am'
-    .field
-      = text_messages_form.text_field :phone_number, placeholder: '315-749-8433'
+    = f.password_field :password_confirmation, placeholder: 'Password Confirmation', label: false
   .actions
-    = f.submit class: 'button', id: 'landing_submit', value: 'Text me!'
+    = f.submit class: 'button', id: 'landing_submit', value: 'Sign up'
+
+  
