@@ -18,7 +18,7 @@ class TextMessage < ActiveRecord::Base
         TextMessage.update_registration(phone_number)
         render 'update_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'delete'
-        destroy(phone_number)
+        TextMessage.destroy(phone_number)
         render 'unsubscribe.xml.erb', content_type: 'text/xml'
       end   
     end
@@ -29,12 +29,12 @@ class TextMessage < ActiveRecord::Base
       user = User.find_by_id(user_id)
       user.update_attribute("registered", true)
       user.save!
-      execute_text_message_worker(text_message.id, text_message.send_time, text_message.user_id)
+      TextMessage.execute_text_message_worker(text_message.id, text_message.send_time, text_message.user_id)
     end
 
     # need to refactor to use iron_worker scheduler
     # once it is fixed; broken as of 10/26
-    def execute_text_message_worker(text_message_id, send_time, user_id)
+    def self.execute_text_message_worker(text_message_id, send_time, user_id)
       iron_worker = IronWorkerNG::Client.new
       iron_worker.tasks.create("Master", { 
           :text_message_id => text_message_id,
@@ -43,14 +43,9 @@ class TextMessage < ActiveRecord::Base
         })
     end
 
-    def destroy(phone_number)
+    def self.destroy(phone_number)
       set_text_message_via_twilio(phone_number)
       @text_message.destroy
       redirect_to root_path
-    end
-
-
-    def set_text_message_via_twilio(phone_number)
-      @text_message = TextMessage.find_by_phone_number(phone_number)
-    end
+    end    
 end
