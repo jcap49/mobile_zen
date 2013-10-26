@@ -62,7 +62,7 @@ class TextMessagesController < ApplicationController
 
     def parse_text_message_body(text_message_body, phone_number)
       if text_message_body.downcase == 'yes' 
-        update_registration(phone_number)
+        User.update_registration(phone_number)
         render 'update_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'delete'
         destroy(phone_number)
@@ -70,14 +70,7 @@ class TextMessagesController < ApplicationController
       end   
     end
 
-    def update_registration(phone_number)
-      text_message = TextMessage.find_by_phone_number(phone_number)
-      user_id = text_message.user_id
-      user = User.find_by_id(user_id)
-      user.update_attribute("registered", true)
-      user.save!
-      execute_text_message_worker(text_message.id, text_message.send_time, text_message.user_id)
-    end
+    
 
     # for previously registered users
     def send_registered_welcome_text_message(phone_number)
@@ -88,15 +81,3 @@ class TextMessagesController < ApplicationController
         body: TextMessage::REGISTERED_WELCOME 
         )    
     end
-
-    # need to refactor to use iron_worker scheduler
-    # once it is fixed; broken as of 10/26
-    def execute_text_message_worker(text_message_id, send_time, user_id)
-      iron_worker = IronWorkerNG::Client.new
-      iron_worker.tasks.create("Master", { 
-          :text_message_id => text_message_id,
-          :user_id => user_id,
-          :database => Rails.configuration.database_configuration[Rails.env],
-        })
-    end
-end

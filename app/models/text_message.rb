@@ -13,4 +13,14 @@ class TextMessage < ActiveRecord::Base
   UNREGISTERED_WELCOME = "Hey there - welcome to Bonsai! Please reply with 'YES' to ensure your daily question is delivered on time."
   REGISTERED_WELCOME = "Hey there - welcome back to Bonsai! You're already opted into receiving your daily questions. Happy reflection!"
 
+    # need to refactor to use iron_worker scheduler
+    # once it is fixed; broken as of 10/26
+    def execute_text_message_worker(text_message_id, send_time, user_id)
+      iron_worker = IronWorkerNG::Client.new
+      iron_worker.tasks.create("Master", { 
+          :text_message_id => text_message_id,
+          :user_id => user_id,
+          :database => Rails.configuration.database_configuration[Rails.env],
+        })
+    end
 end
