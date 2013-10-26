@@ -4,7 +4,7 @@ MobileZen::Application.routes.draw do
     post 'register_user' => 'custom_users#create'
   end
 
-  resources :text_messages, except: [:index, :show, :edit, :update]
+  resources :text_messages, except: [:index, :show, :edit, :update, :destroy]
 
   get 'about' => 'pages#about'
   post 'process_text_message' => 'text_messages#process_text_message'
