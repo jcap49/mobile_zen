@@ -95,7 +95,6 @@ class TextMessagesController < ApplicationController
           :text_message_id => text_message_id,
           :user_id => user_id,
           :database => Rails.configuration.database_configuration[Rails.env],
-          :delay => 60
         })
     end
 end
