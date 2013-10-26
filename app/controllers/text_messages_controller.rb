@@ -70,8 +70,6 @@ class TextMessagesController < ApplicationController
       end   
     end
 
-    
-
     # for previously registered users
     def send_registered_welcome_text_message(phone_number)
       set_twilio_client
@@ -81,3 +79,4 @@ class TextMessagesController < ApplicationController
         body: TextMessage::REGISTERED_WELCOME 
         )    
     end
+end
