@@ -32,10 +32,14 @@ class TextMessagesController < ApplicationController
   #   @text_message.update_attribute(body: body)
   # end
 
-  
+  def destroy(phone_number)
+    set_text_message_via_twilio(phone_number)
+    @text_message.destroy
+    redirect_to root_path
+  end
 
   def process_text_message
-    TextMessage.parse_text_message_body(params[:Body], params[:From])
+    parse_text_message_body(params[:Body], params[:From])
   end
 
   private
@@ -44,6 +48,9 @@ class TextMessagesController < ApplicationController
       @text_message = TextMessage.find(params[:id])
     end
 
+    def set_text_message_via_twilio(phone_number)
+      @text_message = TextMessage.find_by_phone_number(phone_number)
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def text_message_params
       params.require(:text_message).permit(:phone_number, :text_body, :send_time, :user_id)
@@ -53,28 +60,24 @@ class TextMessagesController < ApplicationController
       @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
     end
 
-    # def set_text_message_via_twilio(phone_number)
-    #   @text_message = TextMessage.find_by_phone_number(phone_number)
-    # end
+    def parse_text_message_body(text_message_body, phone_number)
+      if text_message_body.downcase == 'yes' 
+        update_registration(phone_number)
+        render 'update_registration.xml.erb', content_type: 'text/xml'
+      elsif text_message_body.downcase == 'delete'
+        destroy(phone_number)
+        render 'unsubscribe.xml.erb', content_type: 'text/xml'
+      end   
+    end
 
-    # def parse_text_message_body(text_message_body, phone_number)
-    #   if text_message_body.downcase == 'yes' 
-    #     update_registration(phone_number)
-    #     render 'update_registration.xml.erb', content_type: 'text/xml'
-    #   elsif text_message_body.downcase == 'delete'
-    #     destroy(phone_number)
-    #     render 'unsubscribe.xml.erb', content_type: 'text/xml'
-    #   end   
-    # end
-
-    # def update_registration(phone_number)
-    #   text_message = TextMessage.find_by_phone_number(phone_number)
-    #   user_id = text_message.user_id
-    #   user = User.find_by_id(user_id)
-    #   user.update_attribute("registered", true)
-    #   user.save!
-    #   execute_text_message_worker(text_message.id, text_message.send_time, text_message.user_id)
-    # end
+    def update_registration(phone_number)
+      text_message = TextMessage.find_by_phone_number(phone_number)
+      user_id = text_message.user_id
+      user = User.find_by_id(user_id)
+      user.update_attribute("registered", true)
+      user.save!
+      execute_text_message_worker(text_message.id, text_message.send_time, text_message.user_id)
+    end
 
     # for previously registered users
     def send_registered_welcome_text_message(phone_number)
@@ -86,14 +89,14 @@ class TextMessagesController < ApplicationController
         )    
     end
 
-    # # need to refactor to use iron_worker scheduler
-    # # once it is fixed; broken as of 10/26
-    # def execute_text_message_worker(text_message_id, send_time, user_id)
-    #   iron_worker = IronWorkerNG::Client.new
-    #   iron_worker.tasks.create("Master", { 
-    #       :text_message_id => text_message_id,
-    #       :user_id => user_id,
-    #       :database => Rails.configuration.database_configuration[Rails.env],
-    #     })
-    # end
+    # need to refactor to use iron_worker scheduler
+    # once it is fixed; broken as of 10/26
+    def execute_text_message_worker(text_message_id, send_time, user_id)
+      iron_worker = IronWorkerNG::Client.new
+      iron_worker.tasks.create("Master", { 
+          :text_message_id => text_message_id,
+          :user_id => user_id,
+          :database => Rails.configuration.database_configuration[Rails.env],
+        })
+    end
 end
