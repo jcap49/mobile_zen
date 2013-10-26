@@ -6,9 +6,10 @@ name "Master"
 # include all the gems
 gem "iron_worker_ng"
 gem 'activerecord'
+gem 'activemodel'
 gem 'pg'
 gem 'twilio-ruby'
-merge_gem 'activemodel'
+
 
 # make sure pg is good to go
 full_remote_build true 
