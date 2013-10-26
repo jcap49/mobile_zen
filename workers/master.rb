@@ -22,7 +22,6 @@ def send_sms
   twilio_client = Twilio::REST::Client.new(@account_sid, @auth_token)
   text_message = TextMessage.find_by_id(params['text_message_id'])
   # return if text_message.nil?
-  logger.info "Text Message Body: #{text_message.body}; sent to: #{text_message.phone_number}"
   twilio_client.account.sms.messages.create(
     from: TextMessage::TWILIO_PHONE_NUMBER,
     to: text_message.phone_number,

@@ -91,13 +91,11 @@ class TextMessagesController < ApplicationController
 
     def execute_text_message_worker(text_message_id, send_time, user_id)
       iron_worker = IronWorkerNG::Client.new
-      iron_worker.schedules.create("Master", { 
+      iron_worker.tasks.create("Master", { 
           :text_message_id => text_message_id,
           :user_id => user_id,
-          :start_at => send_time,
-          :run_every => 3600 * 24,
-          :run_times => 365,
-          :database => Rails.configuration.database_configuration[Rails.env]
+          :database => Rails.configuration.database_configuration[Rails.env],
+          :delay => 60
         })
     end
 end
