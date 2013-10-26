@@ -15,7 +15,7 @@ class TextMessage < ActiveRecord::Base
 
     def self.parse_text_message_body(text_message_body, phone_number)
       if text_message_body.downcase == 'yes' 
-        update_registration(phone_number)
+        TextMessage.update_registration(phone_number)
         render 'update_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'delete'
         destroy(phone_number)
@@ -23,7 +23,7 @@ class TextMessage < ActiveRecord::Base
       end   
     end
 
-    def update_registration(phone_number)
+    def self.update_registration(phone_number)
       text_message = TextMessage.find_by_phone_number(phone_number)
       user_id = text_message.user_id
       user = User.find_by_id(user_id)
@@ -49,7 +49,7 @@ class TextMessage < ActiveRecord::Base
       redirect_to root_path
     end
 
-    
+
     def set_text_message_via_twilio(phone_number)
       @text_message = TextMessage.find_by_phone_number(phone_number)
     end
