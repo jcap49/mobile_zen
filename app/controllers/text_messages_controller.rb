@@ -14,8 +14,11 @@ class TextMessagesController < ApplicationController
   def create  
     @text_message = TextMessage.new(text_message_params)
     @text_message.user_id = -1
-    sanitize_send_time(@text_message)
-
+    
+    unless @text_message.nil?
+      sanitize_send_time(@text_message)
+    end
+    
     if user_signed_in? && @text_message.save
       @text_message.user_id = current_user.id
       @text_message.save
@@ -23,6 +26,7 @@ class TextMessagesController < ApplicationController
       redirect_to root_path, notice: "Great - you're all sorted."
     elsif @text_message.save 
       session[:text_message_id] = @text_message.id
+      sanitize_send_time(@text_message)
       redirect_to new_user_registration_path, notice: "Great - you'll just have to register for an account quickly."
     else
       render action: 'new', notice: "Whoops something went wrong - give it another go."
