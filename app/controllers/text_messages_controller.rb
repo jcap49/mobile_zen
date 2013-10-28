@@ -15,7 +15,7 @@ class TextMessagesController < ApplicationController
     @text_message = TextMessage.new(text_message_params)
     @text_message.user_id = -1
     
-    unless @text_message.nil?
+    unless @text_message.send_time.nil?
       sanitize_send_time(@text_message)
     end
     
