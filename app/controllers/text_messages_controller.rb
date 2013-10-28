@@ -6,6 +6,9 @@ class TextMessagesController < ApplicationController
 
   def new
     @text_message = TextMessage.new(params[:text_message])
+    if user_signed_in?
+      @saved_text_message = TextMessage.find_by_user_id(current_user.id)
+    end
   end
 
   def create  

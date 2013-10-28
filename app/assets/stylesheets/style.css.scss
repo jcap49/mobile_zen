@@ -106,6 +106,21 @@ font-family: 'Titillium Web', sans-serif;
   text-align: center;
 }
 
+.footer {
+  position: absolute;
+  bottom: 5;
+  right: 5;
+
+  p {
+    float: right;
+    right: 10;
+    margin-bottom: 0;
+  }
+
+  span {
+    margin-bottom: 0;
+  }
+}
 // Main Section
 
 .landing_header {
@@ -133,6 +148,15 @@ font-family: 'Titillium Web', sans-serif;
 #slug_description {
   margin: auto;
   width: 50%;
+}
+
+#current_text_info {
+  padding-top: 2%;
+  padding-left: 2%;
+
+  span {
+    font-weight: bold;
+  }
 }
 
 #text_limit {

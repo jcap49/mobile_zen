@@ -12,10 +12,10 @@ class CustomUsersController < Devise::RegistrationsController
       set_text_message
       update_text_message_user_id(@text_message)
       sanitize_phone_number(@text_message)
-      # send_unregistered_welcome_text_message(@text_message.phone_number)
+      send_unregistered_welcome_text_message(@text_message.phone_number)
 
       if resource.active_for_authentication?
-        # set_flash_message :notice, :signed_up if is_navigational_format?
+        set_flash_message :notice, :signed_up if is_navigational_format?
         sign_up(resource_name, resource)
         respond_with resource, :location => after_sign_up_path_for(resource), notice: "Great - you're all sorted."
       else
