@@ -22,6 +22,7 @@ class TextMessagesController < ApplicationController
     if user_signed_in? && @text_message.save
       @text_message.user_id = current_user.id
       @text_message.save
+      sanitize_phone_number(text_message)
       send_registered_welcome_text_message(@text_message.phone_number)
       TextMessage.execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
       redirect_to root_path, notice: "Great - you're all sorted."
@@ -44,6 +45,7 @@ class TextMessagesController < ApplicationController
   def destroy(phone_number)
     set_text_message_via_twilio(phone_number)
     @text_message.destroy
+    # cancel_worker(phone_number)
     redirect_to root_path
   end
 
@@ -93,5 +95,17 @@ class TextMessagesController < ApplicationController
       if text_message.send_time < DateTime.now
         text_message.send_time = text_message.send_time + 1.day
       end
+    end
+
+    def sanitize_phone_number(text_message)
+      phone_number = text_message.phone_number
+      phone_number.gsub!("-", "")
+      phone_number.prepend("+1")
+      text_message.update_column("phone_number", phone_number)
+    end
+
+    def cancel_worker(phone_number)
+      text_message = TextMessage.find_by_phone_number(phone_number)
+      IronWorker.service.cancel_schedule(text_message.schedule_id)
     end
 end

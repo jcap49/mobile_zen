@@ -22,7 +22,6 @@ class TextMessage < ActiveRecord::Base
         },{
           :start_at => send_time,
           :run_every => 3600 * 24,
-          :run_times => 365          
         })
     end
 end
