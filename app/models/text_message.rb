@@ -17,9 +17,12 @@ class TextMessage < ActiveRecord::Base
     # once it is fixed; broken as of 10/26
     def self.execute_text_message_worker(text_message_id, send_time, user_id)
       iron_worker = IronWorkerNG::Client.new
-      iron_worker.tasks.create("Master", { 
+      iron_worker.schedules.create("Master", { 
           :text_message_id => text_message_id,
           :user_id => user_id,
+          :start_at => send_time,
+          :run_every => 3600 * 24,
+          :run_times => 365,
           :database => Rails.configuration.database_configuration[Rails.env],
         })
     end
