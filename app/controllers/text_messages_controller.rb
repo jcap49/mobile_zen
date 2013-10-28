@@ -94,7 +94,7 @@ class TextMessagesController < ApplicationController
     def sanitize_send_time(text_message)
       send_time = text_message.send_time
       if send_time < DateTime.now
-        send_time = text_message.send_time + 1.day
+        text_message.send_time = send_time + 1.day
       end
       send_time.utc
     end
