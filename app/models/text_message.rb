@@ -17,7 +17,8 @@ class TextMessage < ActiveRecord::Base
       iron_worker = IronWorkerNG::Client.new
       iron_worker.schedules.create("Master", { 
           :text_message_id => text_message_id,
-          :user_id => user_id,
+          :user_id => user_id
+        },{
           :start_at => send_time,
           :run_every => 3600 * 24,
           :run_times => 365,
