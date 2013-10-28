@@ -16,10 +16,10 @@ class TextMessagesController < ApplicationController
       @text_message.user_id = current_user.id
       @text_message.save
       send_registered_welcome_text_message(@text_message.phone_number)
-      redirect_to root_path, notice: "Text message successfully created."
+      redirect_to root_path, notice: "Great - you're all sorted."
     elsif @text_message.save 
       session[:text_message_id] = @text_message.id
-      redirect_to new_user_registration_path
+      redirect_to new_user_registration_path, notice: "Great - you'll just have to register for an account quickly."
     else
       render action: 'new', notice: "Whoops something went wrong - give it another go."
     end
