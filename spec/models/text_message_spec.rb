@@ -5,6 +5,7 @@ describe TextMessage do
     params = @params = {}
     params[:text_body] = "Shine on you crazy diamond"
     params[:send_time] = DateTime.now 
+    params[:phone_number] = "315-749-8433"
   end
 
   it "should pass validation with a proper length text body" do 
@@ -58,7 +59,7 @@ describe TextMessage do
     text_message = TextMessage.new(@params)
 
     expect(text_message.valid?).to be_false
-    expect(text_message.errors.count).to be(1)
+    expect(text_message.errors.count).to be(2)
   end
 
   # it "should fail validation if phone number isn't unique" do 
