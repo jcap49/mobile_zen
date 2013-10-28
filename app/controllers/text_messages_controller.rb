@@ -14,6 +14,7 @@ class TextMessagesController < ApplicationController
   def create  
     @text_message = TextMessage.new(text_message_params)
     @text_message.user_id = -1
+    sanitize_send_time(@text_message)
 
     if user_signed_in? && @text_message.save
       @text_message.user_id = current_user.id
@@ -81,5 +82,11 @@ class TextMessagesController < ApplicationController
         to: phone_number,
         body: TextMessage::REGISTERED_WELCOME 
         )    
+    end
+
+    def sanitize_send_time(text_message)
+      if text_message.send_time < DateTime.now
+        text_message.send_time = text_message.send_time + 1.day
+      end
     end
 end
