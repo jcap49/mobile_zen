@@ -22,7 +22,7 @@ class TextMessagesController < ApplicationController
     if user_signed_in? && @text_message.save
       @text_message.user_id = current_user.id
       @text_message.save
-      sanitize_phone_number(text_message)
+      sanitize_phone_number(@text_message)
       send_registered_welcome_text_message(@text_message.phone_number)
       TextMessage.execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
       redirect_to root_path, notice: "Great - you're all sorted."
