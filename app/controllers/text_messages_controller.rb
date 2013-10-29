@@ -1,5 +1,4 @@
 class TextMessagesController < ApplicationController
-  # before_action :set_text_message, only: [:index, :show, :update, :destroy]
 
   def index
   end
@@ -35,13 +34,6 @@ class TextMessagesController < ApplicationController
     end
   end 
 
-  # finish implementing method
-
-  # def edit(phone_number, body)
-  #   set_text_message_via_twilio(phone_number)
-  #   @text_message.update_attribute(body: body)
-  # end
-
   def destroy(phone_number)
     set_text_message_via_twilio(phone_number)
     cancel_worker(@text_message.schedule_id)
@@ -54,11 +46,6 @@ class TextMessagesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_text_message
-      @text_message = TextMessage.find(params[:id])
-    end
-
     def set_text_message_via_twilio(phone_number)
       @text_message = TextMessage.find_by_phone_number(phone_number)
     end
