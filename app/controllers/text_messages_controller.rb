@@ -38,7 +38,6 @@ class TextMessagesController < ApplicationController
     set_text_message_via_twilio(phone_number)
     cancel_worker(@text_message.schedule_id)
     @text_message.destroy
-    redirect_to root_path
   end
 
   def process_text_message
