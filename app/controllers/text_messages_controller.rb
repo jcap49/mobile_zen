@@ -7,6 +7,7 @@ class TextMessagesController < ApplicationController
   def new
     @text_message = TextMessage.new(params[:text_message])
     if user_signed_in?
+      binding.pry
       @saved_text_message = TextMessage.find_by_user_id(current_user.id)
     end
   end
@@ -44,8 +45,8 @@ class TextMessagesController < ApplicationController
 
   def destroy(phone_number)
     set_text_message_via_twilio(phone_number)
+    cancel_worker(@text_message.schedule_id)
     @text_message.destroy
-    # cancel_worker(phone_number)
     redirect_to root_path
   end
 
@@ -106,8 +107,8 @@ class TextMessagesController < ApplicationController
       text_message.update_column("phone_number", phone_number)
     end
 
-    def cancel_worker(phone_number)
-      text_message = TextMessage.find_by_phone_number(phone_number)
-      IronWorker.service.cancel_schedule(text_message.schedule_id)
+    def cancel_worker(schedule_id)
+      iron_worker = IronWorkerNG::Client.new
+      iron_worker.schedules_cancel(schedule_id)
     end
 end

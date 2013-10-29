@@ -15,7 +15,7 @@ class TextMessage < ActiveRecord::Base
 
     def self.execute_text_message_worker(text_message_id, send_time, user_id)
       iron_worker = IronWorkerNG::Client.new
-      iron_worker.schedules.create("Master", { 
+      @text_message_worker = iron_worker.schedules.create("Master", { 
           :text_message_id => text_message_id,
           :user_id => user_id,
           :database => Rails.configuration.database_configuration[Rails.env],
@@ -23,5 +23,12 @@ class TextMessage < ActiveRecord::Base
           :start_at => send_time + 4.hours,
           :run_every => 3600 * 24,
         })
+      TextMessage.save_text_message_schedule_id(@text_message_worker.id, text_message_id)
+    end
+
+    def self.save_text_message_schedule_id(text_message_schedule_id, text_message_id)
+      text_message = TextMessage.find_by_id(text_message_id)
+      text_message.schedule_id = text_message_schedule_id
+      text_message.update_attribute("schedule_id", text_message.schedule_id)
     end
 end
