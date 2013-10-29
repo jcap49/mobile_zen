@@ -28,7 +28,6 @@ class TextMessage < ActiveRecord::Base
 
     def self.save_text_message_schedule_id(text_message_schedule_id, text_message_id)
       text_message = TextMessage.find_by_id(text_message_id)
-      text_message.schedule_id = text_message_schedule_id
-      text_message.update_attribute("schedule_id", text_message.schedule_id)
+      text_message.update_attribute("schedule_id", text_message_schedule_id)
     end
 end
