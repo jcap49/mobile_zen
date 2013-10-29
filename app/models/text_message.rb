@@ -20,7 +20,7 @@ class TextMessage < ActiveRecord::Base
           :user_id => user_id,
           :database => Rails.configuration.database_configuration[Rails.env],
         },{
-          :start_at => send_time,
+          :start_at => send_time + 4.hours,
           :run_every => 3600 * 24,
         })
     end
