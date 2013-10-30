@@ -12,6 +12,21 @@ font-family: 'Gochi Hand', cursive;
 font-family: 'Titillium Web', sans-serif;
 */
 
+// fb & twitter shit
+
+.fb-like { 
+  top: 10;
+  left: -110;
+}
+
+.twitter-share-button {
+  position: absolute;
+  left: 20;
+  top: 10;
+}
+
+// some general styling
+
 .button {
   border-style: none;
 }
@@ -125,7 +140,7 @@ font-family: 'Titillium Web', sans-serif;
 
 .landing_header {
   text-align: center;
-  margin-top: 3%;
+  margin-top: -2%;
   margin-bottom: 3%;
   // position: relative;
 }
