@@ -2,15 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// miscellaneous styling
+// global sass vars
 
-// Font Styles
+// main blue hue
+$light_blue: #3672f5; 
 
-/* font-family: 'Source Sans Pro', sans-serif;
-font-family: 'Bubblegum Sans', cursive;
-font-family: 'Gochi Hand', cursive;
-font-family: 'Titillium Web', sans-serif;
-*/
 
 // fb & twitter shit
 
@@ -50,76 +46,6 @@ font-family: 'Titillium Web', sans-serif;
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
-// flash message/notice/error styling
-
-.flash.success {
-  background: #2DAD2F;
-  color: #D9D9D9;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  margin-left: 24%;
-  width: 50%;
-
-  p {
-    text-align: center;
-  }
-}
-
-.flash.notice {
-  background: #3672F5;
-  color: #D9D9D9;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  margin-left: 24%;
-  width: 50%;
-
-  p {
-    text-align: center;
-  }
-}
-
-.flash.error {
-  background: #c60f13;
-  color: #D9D9D9;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  margin-left: 24%;
-  width: 50%;
-
-  p {
-    text-align: center;
-  }
-}
-
-.close {
-  float: left;
-  margin-left: 0.5%;
-  margin-top: -0.5%;
-  cursor: pointer;
-}
-
-.error.medium.input-text.error {
-  width: 30%;
-  margin: auto;
-  display: block;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-}
-
-.alert-box.success {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.alert-box.alert {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  text-align: center;
-}
 
 .footer {
   position: absolute;
@@ -136,13 +62,13 @@ font-family: 'Titillium Web', sans-serif;
     margin-bottom: 0;
   }
 }
+
 // Main Section
 
 .landing_header {
   text-align: center;
   margin-top: -2%;
   margin-bottom: 3%;
-  // position: relative;
 }
 
 #landing_title {
@@ -182,7 +108,7 @@ font-family: 'Titillium Web', sans-serif;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 5px;
-  border-color: #3672F5;
+  border-color: $light_blue;
   width: 520px;
 
   #text_limit_message {
@@ -191,8 +117,6 @@ font-family: 'Titillium Web', sans-serif;
     padding-left: 2%;
   }
 }
-
-
 
 // Sign-up Form Styles - New Text Message
 
@@ -219,8 +143,6 @@ font-family: 'Titillium Web', sans-serif;
 }
 
 #landing_form {
-  
-  // margin: auto;
   text-align: center;
 
   input {
@@ -229,78 +151,13 @@ font-family: 'Titillium Web', sans-serif;
     border-radius: 5px;
     margin-top: 2%;
   }
-}
 
-// Sign-up Form Styles - New User Reg
-
-#new_registration {
-  margin: auto;
-  
-  #reg_banner {
-    text-align: center;
+  label {
+    margin-bottom: -1%;
   }
 
-  #reg_sub_header {
-    text-align: center;
-  }
-  
-  #reg_image {
-    img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 3%;
-    }
-  }
-
-  #reg_form {
-    text-align: center;
-
-    input {
-      text-align: center;
-      display: inline-block;
-      width: 30%;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      margin-top: 2%;
-    }
+  small {
+    margin-bottom: 1%;
   }
 }
 
-
-// Sign-up Form Styles - User Signin
-
-#new_session {
-  margin: auto;
-  
-  #session_banner {
-    text-align: center;
-  }
-
-  #session_sub_header {
-    text-align: center;
-  }
-  
-  #session_image {
-    img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 3%;
-    }
-  }
-
-  #session_form {
-    text-align: center;
-
-    input {
-      text-align: center;
-      display: inline-block;
-      width: 30%;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-    }
-  }
-}

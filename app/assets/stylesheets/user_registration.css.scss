@@ -1,0 +1,73 @@
+// Sign-up Form Styles - New User Reg
+
+#new_registration {
+  margin: auto;
+  
+  #reg_banner {
+    text-align: center;
+  }
+
+  #reg_sub_header {
+    text-align: center;
+  }
+  
+  #reg_image {
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 3%;
+    }
+  }
+
+  #reg_form {
+    text-align: center;
+
+    input {
+      text-align: center;
+      display: inline-block;
+      width: 30%;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      margin-top: 2%;
+    }
+  }
+}
+
+
+// Sign-up Form Styles - User Signin
+
+#new_session {
+  margin: auto;
+  
+  #session_banner {
+    text-align: center;
+  }
+
+  #session_sub_header {
+    text-align: center;
+  }
+  
+  #session_image {
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 3%;
+    }
+  }
+
+  #session_form {
+    text-align: center;
+
+    input {
+      text-align: center;
+      display: inline-block;
+      width: 30%;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+  }
+}

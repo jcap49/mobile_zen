@@ -1,3 +1,5 @@
+$light_blue: #3672f5; 
+
 .footer {
   position: fixed;
   bottom: 2%;
@@ -5,4 +7,10 @@
   margin: auto;
   text-align: center;
   font-size: 14px;
+  
+  #disclaimer {
+    background: $light_blue;
+    height: 200px;
+    margin-right: 20%;
+  }
 }
