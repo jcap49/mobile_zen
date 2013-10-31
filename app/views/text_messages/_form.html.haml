@@ -1,7 +1,7 @@
 = form_for @text_message do |f|
   .field
-    = f.label "Your question:"
-    = f.text_field :text_body, placeholder: 'What 3 things am I thankful for today?', label: false
+    = f.label "Your question or quotation:"
+    = f.text_field :text_body, placeholder: 'e.g. What 3 things am I thankful for today?', label: false
   .field#send_time.time.ui-timepicker-input
     = f.label "Time of delivery each day:"
     = f.text_field :send_time, placeholder: '9:00am',  label: false
