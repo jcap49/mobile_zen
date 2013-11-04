@@ -20,7 +20,7 @@ class TextMessage < ActiveRecord::Base
           :user_id => user_id,
           :database => Rails.configuration.database_configuration[Rails.env],
         },{
-          :start_at => send_time + 4.hours,
+          :start_at => send_time + 5.hours,
           :run_every => 3600 * 24,
         })
       TextMessage.save_text_message_schedule_id(@text_message_worker.id, text_message_id)
