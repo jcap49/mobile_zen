@@ -12,12 +12,12 @@ $light_blue: #3672f5;
 
 .fb-like { 
   top: 10;
-  left: -110;
+  left: 20;
 }
 
 .twitter-share-button {
   position: absolute;
-  left: 20;
+  left: 105;
   top: 10;
 }
 
@@ -36,7 +36,6 @@ $light_blue: #3672f5;
   -moz-border-radius: 5px;
   border-radius: 5px;
   float: right;
-  margin-top: -4%;
 }
 
 #logout {
@@ -51,6 +50,11 @@ $light_blue: #3672f5;
   position: absolute;
   bottom: 10;
   right: 15;
+  color: white;
+
+  a {
+    color: gray;
+  }
 
   p {
     float: right;
@@ -62,6 +66,29 @@ $light_blue: #3672f5;
     margin-bottom: 0;
   }
 }
+
+#disclaimer {
+  height: 300px;
+  width: 100%;
+  font-size: 20px;
+  background-color: $light_blue;
+  color: white;
+  margin-top: 5%;
+
+  a {
+    color: #BFBFBF;
+  }
+
+  ul {
+    text-decoration: none;
+    padding-left: 10%;
+  }
+
+  li {
+    list-style-type: none;
+  }
+}
+
 
 // Main Section
 
@@ -135,11 +162,6 @@ $light_blue: #3672f5;
 
 #text_message_phone_number {
   width: 30%;
-}
-
-#disclaimer {
-  position: absolute;
-  bottom: 0;
 }
 
 #landing_form {

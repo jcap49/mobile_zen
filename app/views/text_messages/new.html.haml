@@ -1,7 +1,7 @@
 .fb-like{data:{href:"https://bonsai1.herokuapp.com", width: "", height: "", colorscheme: "light", layout: "button_count", action:"like", send: "false"}}
 %a.twitter-share-button{data: {url: "http://www.heybonsai.com", related: "jcap49"}}
 
-.section
+.row
   #login_container
     -unless user_signed_in?
       %button.tiny.secondary#login
@@ -41,3 +41,9 @@
   -else  
     #landing_form
       =render 'text_messages/form'
+#disclaimer
+  %ul
+    %li Your phone number's completely secure. 
+    %li We don't share information.
+    %li Some more faq/disclaimer bullshit.
+    %li Some more faq/disclaimer bullshit.
