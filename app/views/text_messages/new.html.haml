@@ -9,38 +9,42 @@
     -if user_signed_in?
       %button.tiny.secondary#logout
         =link_to 'Logout', destroy_user_session_path, :method => "delete"
-  .landing_header
+  #landing_header
     %h1.subheader#landing_title
       Welcome to Bonsai
     %h3.subheader
       What's on your mind?
+  
+  #landing_main_info
     -unless user_signed_in?
       %p#slug_description
         Bonsai is a simple tool for daily reflection. Delivered at a selected time, a text message greets you with a question or quotation of your choosing to reflect on. Take as long, or as little as you’d like.
+        %br
+        %br
+        Bonsai is a simple tool for daily reflection. Delivered at a selected time, a text message greets you with a question or quotation of your choosing to reflect on. Take as long, or as little as you’d like.
+    -if user_signed_in? && current_user.max_text_message_limit?(current_user.id)
+      #text_limit
+        #current_text_info
+          %p
+            Your current text message reads 
+            %span
+              ="'#{@saved_text_message.text_body}'"
+            and will be sent daily to
+            %span
+              =@saved_text_message.phone_number
+            at 
+            %span
+              =@saved_text_message.send_time.strftime("%H:%M") + "."
+        %p#text_limit_message
+          Unfortunately there's a one text message limit per user at the moment. Feel free to reply with 'DELETE' to delete your current message - you can then create a new message of your choosing while logged in here.
+    -else  
+      #landing_form
+        =render 'text_messages/form'
   #landing_image
     =image_tag 'bonsai1.jpg'
-  -unless user_signed_in?
-    #info_prompt
-      %p 
-        There's just a little bit of info needed first... 
-  -if user_signed_in? && current_user.max_text_message_limit?(current_user.id)
-    #text_limit
-      #current_text_info
-        %p
-          Your current text message reads 
-          %span
-            ="'#{@saved_text_message.text_body}'"
-          and will be sent daily to
-          %span
-            =@saved_text_message.phone_number
-          at 
-          %span
-            =@saved_text_message.send_time.strftime("%H:%M") + "."
-      %p#text_limit_message
-        Unfortunately there's a one text message limit per user at the moment. Feel free to reply with 'DELETE' to delete your current message - you can then create a new message of your choosing while logged in here.
-  -else  
-    #landing_form
-      =render 'text_messages/form'
+
+/ beneath the fold
+
 #disclaimer
   %blockquote
     “Life can only be understood backwards; but it must be lived forwards.” - Søren Kierkegaard

@@ -1,12 +1,4 @@
-  // Place all the styles related to the text_messages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-// global sass vars
-
-// main blue hue
-$light_blue: #3672f5; 
-
+// miscellaneous global styling
 
 // fb & twitter shit
 
@@ -21,29 +13,8 @@ $light_blue: #3672f5;
   top: 10;
 }
 
-// some general styling
-
 .button {
   border-style: none;
-}
-
-#login_container {
-  margin-bottom: 5%;
-}
-
-#login {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  float: right;
-}
-
-#logout {
-  float: right;
-  margin-top: -4%;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
 }
 
 .footer {
@@ -67,129 +38,5 @@ $light_blue: #3672f5;
   }
 }
 
-#disclaimer {
-  height: 680px;
-  width: 100%;
-  font-size: 20px;
-  background-color: lighten($light_blue, 10%);
-  color: white;
-  margin-top: 5%;
 
-  a {
-    color: #BFBFBF;
-  }
-
-  ul {
-    text-decoration: none;
-    padding-left: 10%;
-  }
-
-  li {
-    list-style-type: none;
-  }
-
-  blockquote {
-    text-align: center;
-    color: white;
-    border-left: 0;
-  }
-}
-
-
-// Main Section
-
-.landing_header {
-  text-align: center;
-  margin-top: -5%;
-  margin-bottom: 3%;
-
-  #landing_title {
-    line-height: .5;
-    padding-left: 50;
-  }
-}
-
-
-
-#landing_image {
-  margin-top: -1%;
-
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 3%;
-  }
-}
-
-#slug_description {
-  margin: auto;
-  width: 50%;
-}
-
-#current_text_info {
-  padding-top: 2%;
-  padding-left: 2%;
-
-  span {
-    font-weight: bold;
-  }
-}
-
-#text_limit {
-  width: 50%;
-  margin: auto;
-  border-style: solid;
-  border-width: 1px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 5px;
-  border-color: $light_blue;
-  width: 520px;
-
-  #text_limit_message {
-    padding-top: 3%;
-    padding-right: 2%;
-    padding-left: 2%;
-  }
-}
-
-// Sign-up Form Styles - New Text Message
-
-#info_prompt {
-  margin-top: 3%;
-  text-align: center;
-}
-
-#text_message_text_body {
-  width: 30%;
-}
-
-#text_message_send_time {
-  width: 30%;
-}
-
-#text_message_phone_number {
-  width: 30%;
-}
-
-#landing_form {
-  text-align: center;
-
-  input {
-    text-align: center;
-    display: inline-block;
-    border-radius: 5px;
-    margin-top: 2%;
-  }
-
-  label {
-    margin-bottom: -1%;
-    color: #6f6f6f;
-  }
-
-  small {
-    margin-bottom: 1%;
-  }
-}
 
