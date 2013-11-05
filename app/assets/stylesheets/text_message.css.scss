@@ -141,11 +141,20 @@ $light_blue: #3672f5;
 
   ul {
     text-decoration: none;
-    padding-left: 10%;
+    padding-left: 5%;
+
+    .disclaimer_header {
+    	font-size: 22px;
+    }
   }
 
   li {
     list-style-type: none;
+    padding-right: 10%;
+
+    .disclaimer_content {
+    	font-size: 16px;
+    }
   }
 
   blockquote {
