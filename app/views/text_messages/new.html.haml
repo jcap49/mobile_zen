@@ -1,7 +1,7 @@
 .fb-like{data:{href:"https://bonsai1.herokuapp.com", width: "", height: "", colorscheme: "light", layout: "button_count", action:"like", send: "false"}}
 %a.twitter-share-button{data: {url: "http://www.heybonsai.com", related: "jcap49"}}
 
-.row
+.row#main_body
   #login_container
     -unless user_signed_in?
       %button.tiny.secondary#login
@@ -11,7 +11,7 @@
         =link_to 'Logout', destroy_user_session_path, :method => "delete"
   .landing_header
     %h1.subheader#landing_title
-      Welcome to Bonsai. 
+      Welcome to Bonsai
     %h3.subheader
       What's on your mind?
     -unless user_signed_in?
@@ -42,6 +42,8 @@
     #landing_form
       =render 'text_messages/form'
 #disclaimer
+  %blockquote
+    “Life can only be understood backwards; but it must be lived forwards.” - Søren Kierkegaard
   %ul
     %li Your phone number's completely secure. 
     %li We don't share information.
