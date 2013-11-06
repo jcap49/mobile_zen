@@ -13,6 +13,7 @@ $light_blue: #3672f5;
   -moz-border-radius: 5px;
   border-radius: 5px;
   float: right;
+  margin-top: 1%;
 }
 
 #logout {
@@ -146,7 +147,6 @@ $light_blue: #3672f5;
 
     .disclaimer_header {
     	font-size: 22px;
-      // fix to some other lighter shade of gray
       color: lighten(gray, 30%);
       padding-top: 1%;
     }
