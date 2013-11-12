@@ -13,10 +13,10 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
-Spec::Runner.configure do |config|
-  config.include(SmsSpec::Helpers)
-  config.include(SmsSpec::Matchers)
-end
+# RSpec::Runner.configure do |config|
+#   config.include(SmsSpec::Helpers)
+#   config.include(SmsSpec::Matchers)
+# end
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -46,6 +46,12 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  config.include FactoryGirl::Syntax::Methods
+
   # assigning twilio ruby as the driver for sms_spec
   # SmsSpec.driver = :"twilio-ruby"
+
+  # for devise testing
+  config.include Devise::TestHelpers, :type => :controller
+  config.extend ControllerMacros, :type => :controller
 end

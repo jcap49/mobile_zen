@@ -22,9 +22,6 @@
         Bonsai is a simple tool for daily reflection, helping you make time for yourself. 
         Delivered at a selected time, a text message greets you with a question 
         or quotation of your choosing to reflect on. Take as long, or as little as you’d like.
-        %br
-        %br
-        
     -if user_signed_in? && current_user.max_text_message_limit?(current_user.id)
       #text_limit
         #current_text_info
