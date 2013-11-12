@@ -11,17 +11,20 @@
         =link_to 'Logout', destroy_user_session_path, :method => "delete"
   #landing_header
     %h1.subheader#landing_title
-      Welcome to Bonsai
+      Bonsai: Your Cause for Pause
     %h3.subheader
-      What's on your mind?
+      A tool to help you find time for daily reflection.
   
   #landing_main_info
     -unless user_signed_in?
       %p#slug_description
-        Bonsai is a simple tool for daily reflection. Delivered at a selected time, a text message greets you with a question or quotation of your choosing to reflect on. Take as long, or as little as you’d like.
+        Life is busy. And life is often times more reactive than proactive. 
+        Bonsai is a simple tool for daily reflection, helping you make time for yourself. 
+        Delivered at a selected time, a text message greets you with a question 
+        or quotation of your choosing to reflect on. Take as long, or as little as you’d like.
         %br
         %br
-        Bonsai is a simple tool for daily reflection. Delivered at a selected time, a text message greets you with a question or quotation of your choosing to reflect on. Take as long, or as little as you’d like.
+        
     -if user_signed_in? && current_user.max_text_message_limit?(current_user.id)
       #text_limit
         #current_text_info

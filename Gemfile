@@ -32,7 +32,9 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
-  gem 'sms-spec'
+  # gem 'sms-spec', :branch => 'sms-spec'
+  # gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'
