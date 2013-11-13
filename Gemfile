@@ -26,7 +26,6 @@ end
 
 group :development do
   gem 'quiet_assets'
-  gem 'pry-rails'
   gem 'better_errors'
 end
 
@@ -39,6 +38,8 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'guard-bundler'
   gem 'factory_girl_rails'
+  gem 'pry-rails'
+  gem 'pry-debugger'
 end
 
 

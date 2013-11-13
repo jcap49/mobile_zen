@@ -122,6 +122,32 @@ $light_blue: #3672f5;
     color: white;
     border-left: 0;
   }
+
+  #disclaimer_content_column_float_left {
+    float: left;
+    
+    ul {
+      width: 50%;  
+    }
+  }
+
+  #disclaimer_image_float_right {
+     float: right;
+     width: 10%;
+  }
+
+  #disclaimer_content_column_float_right {
+    float: right;
+    
+    ul {
+      width: 50%;   
+    }
+  }
+
+  #disclaimer_image_float_left {
+    float: left;
+    width: 10%;
+  }
 }
 
 // Sign-up Form Styles - New Text Message
@@ -170,7 +196,6 @@ $light_blue: #3672f5;
   }
 }
 
-// Sign in form
 
 
 

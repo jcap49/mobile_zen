@@ -2,17 +2,22 @@ require 'spec_helper'
 
 describe TextMessagesController do
 
-  let!(:text_message) { create(:text_message) }
-  let!(:user)         { create(:user) }
+  let!(:text_message) { create(:text_message) }  
 
   default_params = {
     text_body: "Shine on you crazy diamond",
-    phone_number: "315-749-8433",
+    phone_number: "315-749-8432",
     send_time: DateTime.now
   }
 
   def create_text_message
     post :create, text_message: default_params 
+  end
+
+  def login_user
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @user = FactoryGirl.create(:user)
+    sign_in @user
   end
 
 
@@ -47,13 +52,14 @@ describe TextMessagesController do
         post :create, text_message: default_params
         TextMessage.count.should == pre_create_count + 1
         t = TextMessage.find_by_id(text_message.id)
-        t.user_id.should == user.id
+        t.user_id.should == @user.id
       end
 
       it "doesn't create a text message if one associated with the user is found" do 
         login_user 
         create_text_message
         pre_create_count = TextMessage.count
+        binding.pry
         post :create, text_message: default_params
         TextMessage.count.should == pre_create_count
       end
