@@ -83,12 +83,14 @@ $light_blue: #3672f5;
 }
 
 #disclaimer {
-  height: 680px;
+  height: 780px;
   width: 100%;
   font-size: 20px;
   background-color: lighten($light_blue, 10%);
   color: white;
-  margin-top: 5%;
+  margin-top: 6%;
+  padding-left: 13%;
+  padding-right: 13%;
 
   a {
     color: #BFBFBF;
@@ -132,21 +134,24 @@ $light_blue: #3672f5;
   }
 
   #disclaimer_image_float_right {
-     float: right;
-     width: 10%;
+    float: right;
+    margin-top: -21%;
+    padding-right: 20%;
   }
 
   #disclaimer_content_column_float_right {
-    float: right;
     
     ul {
+      padding-top: 3.5%;
+      float: right;
       width: 50%;   
     }
   }
 
   #disclaimer_image_float_left {
     float: left;
-    width: 10%;
+    padding-left: 19%;
+    padding-top: 7.5%
   }
 }
 
