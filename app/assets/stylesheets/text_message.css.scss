@@ -42,12 +42,10 @@ $light_blue: #3672f5;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 39%;
+    margin-top: 42%;
   }
 }
-#landing_main_info {
-	padding-left: 7%;
-}
+
 #slug_description {
   margin-top: 8.25%;
   margin-left: 7%;
@@ -123,6 +121,12 @@ $light_blue: #3672f5;
     text-align: center;
     color: white;
     border-left: 0;
+    padding-top: 4%;
+    padding-bottom: 1%;
+  }
+
+  #quote {
+    color: #e6e6e6;
   }
 
   #disclaimer_content_column_float_left {

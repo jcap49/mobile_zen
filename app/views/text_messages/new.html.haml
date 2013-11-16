@@ -40,25 +40,27 @@
     -else  
       #landing_form
         =render 'text_messages/form'
-  #landing_image
-    =image_tag 'bonsai1.jpg'
+  -unless user_signed_in?
+    #landing_image
+      =image_tag 'bonsai1.jpg'
 
 / beneath the fold
-
-#disclaimer
-  %blockquote
-    “Life can only be understood backwards; but it must be lived forwards.” - Søren Kierkegaard
-  #disclaimer_content_column_float_left
-    %ul
-      %li.disclaimer_header One Text Message. One Reflection.
-      %li.disclaimer_content We believe reflection is most effective when it is simple. All you need to do to get started is a question or comment you would like to reflect on, a time of day you would like the message to be delivered, and a few bits of contact information. Each day, you'll receive the message, hopefully spend a few minutes positively reflecting, and then head off to conquer the world.
-    #disclaimer_image_float_right
-      =image_tag 'text_message.png', id: 'text_message_img'
-  #disclaimer_content_column_float_right 
-    #disclaimer_image_float_left
-      =image_tag 'lock.png', id: 'lock_img'
-    %ul 
-      %li.disclaimer_header Data Security.
-      / add link for privacy policy
-      %li.disclaimer_content Unlike the NSA, we take the security of personal information very seriously. Aside from simply stating the obvious, we've put together a handy privacy policy that outlines exactly what services use your data, how that data is used, and what sort of security protocols are in place to keep your data secure. 
-    
+-unless user_signed_in?
+  #disclaimer
+    %blockquote#quote
+      “Life can only be understood backwards; but it must be lived forwards.” 
+      %i - Søren Kierkegaard
+    #disclaimer_content_column_float_left
+      %ul
+        %li.disclaimer_header One Text Message. One Reflection.
+        %li.disclaimer_content We believe reflection is most effective when it is simple. All you need to do to get started is a question or comment you would like to reflect on, a time of day you would like the message to be delivered, and a few bits of contact information. Each day, you'll receive the message, hopefully spend a few minutes positively reflecting, and then head off to conquer the world.
+      #disclaimer_image_float_right
+        =image_tag 'text_message.png', id: 'text_message_img'
+    #disclaimer_content_column_float_right 
+      #disclaimer_image_float_left
+        =image_tag 'lock.png', id: 'lock_img'
+      %ul 
+        %li.disclaimer_header Data Security.
+        / add link for privacy policy
+        %li.disclaimer_content Unlike the NSA, we take the security of personal information very seriously. Aside from simply stating the obvious, we've put together a handy privacy policy that outlines exactly what services use your data, how that data is used, and what sort of security protocols are in place to keep your data secure. 
+      
