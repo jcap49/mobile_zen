@@ -5,8 +5,7 @@ MobileZen::Application.routes.draw do
   end
 
   resources :text_messages, except: [:index, :show, :edit, :update, :destroy]
-
-  get 'about' => 'pages#about'
+  
   post 'process_text_message' => 'text_messages#process_text_message'
 
   root to: 'text_messages#new'

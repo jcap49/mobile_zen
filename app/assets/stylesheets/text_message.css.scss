@@ -4,45 +4,12 @@ $light_blue: #3672f5;
 
 // /new
 
-#login_container {
-  margin-bottom: 5%;
-}
-
-#login {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  float: right;
-  margin-top: 1%;
-}
-
-#logout {
-  float: right;
-  margin-top: -4%;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-}
-
-// Main Section
-
 #landing_header {
   text-align: center;
   margin-bottom: 3%;
 
   #landing_title {
     line-height: .5;
-  }
-}
-
-#landing_image {
-  margin-top: -1%;
-
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 42%;
   }
 }
 
@@ -86,7 +53,7 @@ $light_blue: #3672f5;
   font-size: 20px;
   background-color: lighten($light_blue, 10%);
   color: white;
-  margin-top: 6%;
+  margin-top: 10%;
   padding-left: 13%;
   padding-right: 13%;
 
@@ -123,6 +90,16 @@ $light_blue: #3672f5;
     border-left: 0;
     padding-top: 4%;
     padding-bottom: 1%;
+  }
+
+  #landing_image {
+
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: -5%;
+    }
   }
 
   #quote {
