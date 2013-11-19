@@ -11,7 +11,6 @@ class CustomUsersController < Devise::RegistrationsController
     if resource.save
       set_text_message
       update_text_message_user_id(@text_message)
-      sanitize_phone_number(@text_message)
       send_unregistered_welcome_text_message(@text_message.phone_number)
 
       if resource.active_for_authentication?
@@ -56,13 +55,6 @@ class CustomUsersController < Devise::RegistrationsController
     def update_text_message_user_id(text_message)
       text_message.user_id = resource.id
       text_message.save
-    end
-
-    def sanitize_phone_number(text_message)
-      phone_number = text_message.phone_number
-      phone_number.gsub!("-", "")
-      phone_number.prepend("+1")
-      text_message.update_column("phone_number", phone_number)
     end
 end
   

@@ -13,21 +13,27 @@ class TextMessage < ActiveRecord::Base
   UNREGISTERED_WELCOME = "Hey there - welcome to Bonsai! Please reply with 'YES' to ensure your daily question is delivered on time."
   REGISTERED_WELCOME = "Hey there - welcome back to Bonsai! You're already opted into receiving your daily questions. Happy reflection!"
 
-    def self.execute_text_message_worker(text_message_id, send_time, user_id)
-      iron_worker = IronWorkerNG::Client.new
-      @text_message_worker = iron_worker.schedules.create("Master", { 
-          :text_message_id => text_message_id,
-          :user_id => user_id,
-          :database => Rails.configuration.database_configuration[Rails.env],
-        },{
-          :start_at => send_time + 5.hours,
-          :run_every => 3600 * 24,
-        })
-      TextMessage.save_text_message_schedule_id(@text_message_worker.id, text_message_id)
-    end
+  def self.execute_text_message_worker(text_message_id, send_time, user_id)
+    iron_worker = IronWorkerNG::Client.new
+    @text_message_worker = iron_worker.schedules.create("Master", { 
+        :text_message_id => text_message_id,
+        :user_id => user_id,
+        :database => Rails.configuration.database_configuration[Rails.env],
+      },{
+        :start_at => send_time + 5.hours,
+        :run_every => 3600 * 24,
+      })
+    TextMessage.save_text_message_schedule_id(@text_message_worker.id, text_message_id)
+  end
 
-    def self.save_text_message_schedule_id(text_message_schedule_id, text_message_id)
-      text_message = TextMessage.find_by_id(text_message_id)
-      text_message.update_attribute("schedule_id", text_message_schedule_id)
-    end
+  def self.save_text_message_schedule_id(text_message_schedule_id, text_message_id)
+    text_message = TextMessage.find_by_id(text_message_id)
+    text_message.update_attribute("schedule_id", text_message_schedule_id)
+  end
+
+
+  def self.cancel_worker(schedule_id)
+    iron_worker = IronWorkerNG::Client.new
+    iron_worker.schedules_cancel(schedule_id)
+  end
 end

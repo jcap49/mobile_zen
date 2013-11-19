@@ -20,8 +20,7 @@ class User < ActiveRecord::Base
 
   def self.update_registration(phone_number)
     text_message = TextMessage.find_by_phone_number(phone_number)
-    user_id = text_message.user_id
-    user = User.find_by_id(user_id)
+    user = User.find_by_id(text_message.user_id)
     user.update_attribute("registered", true)
     user.save!
     TextMessage.execute_text_message_worker(text_message.id, text_message.send_time, text_message.user_id)

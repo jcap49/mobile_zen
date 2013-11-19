@@ -14,14 +14,14 @@ class TextMessagesController < ApplicationController
     @text_message = TextMessage.new(text_message_params)
     @text_message.user_id = -1
     
-    unless @text_message.send_time.nil?
+    unless @text_message.send_time.nil? && @text_message.phone_number.nil?
       sanitize_send_time(@text_message)
+      sanitize_phone_number(@text_message)
     end
     
     if user_signed_in? && @text_message.save
       @text_message.user_id = current_user.id
       @text_message.save
-      sanitize_phone_number(@text_message)
       send_registered_welcome_text_message(@text_message.phone_number)
       TextMessage.execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
       redirect_to root_path, notice: "Great - you're all sorted."
@@ -35,7 +35,7 @@ class TextMessagesController < ApplicationController
 
   def destroy(phone_number)
     set_text_message_via_twilio(phone_number)
-    cancel_worker(@text_message.schedule_id)
+    TextMessage.cancel_worker(@text_message.schedule_id)
     User.cancel_account(@text_message.user_id)
     @text_message.destroy
   end
@@ -90,10 +90,5 @@ class TextMessagesController < ApplicationController
       phone_number.gsub!("-", "")
       phone_number.prepend("+1")
       text_message.update_column("phone_number", phone_number)
-    end
-
-    def cancel_worker(schedule_id)
-      iron_worker = IronWorkerNG::Client.new
-      iron_worker.schedules_cancel(schedule_id)
     end
 end
