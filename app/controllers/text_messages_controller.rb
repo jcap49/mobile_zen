@@ -33,14 +33,6 @@ class TextMessagesController < ApplicationController
     end
   end 
 
-  # add in after_destroy callback
-  def destroy(phone_number)
-    set_text_message_via_twilio(phone_number)
-    TextMessage.cancel_worker(@text_message.schedule_id)
-    User.cancel_account(@text_message.user_id)
-    # @text_message.destroy
-  end
-
   def process_text_message
     parse_text_message_body(params[:Body], params[:From])
   end
@@ -63,7 +55,7 @@ class TextMessagesController < ApplicationController
         User.update_registration(phone_number)
         render 'update_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'delete' || text_message_body.downcase == 'stop'
-        destroy(phone_number)
+        TextMessage.destroy(phone_number)
         render 'unsubscribe.xml.erb', content_type: 'text/xml'
       end   
     end
