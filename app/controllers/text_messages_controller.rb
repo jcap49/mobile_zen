@@ -33,11 +33,12 @@ class TextMessagesController < ApplicationController
     end
   end 
 
+  # add in after_destroy callback
   def destroy(phone_number)
     set_text_message_via_twilio(phone_number)
     TextMessage.cancel_worker(@text_message.schedule_id)
     User.cancel_account(@text_message.user_id)
-    @text_message.destroy
+    # @text_message.destroy
   end
 
   def process_text_message
