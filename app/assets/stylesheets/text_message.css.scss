@@ -70,6 +70,10 @@ $light_blue: #3672f5;
     color: #BFBFBF;
   }
 
+  a:hover {
+    color: lighten(#BFBFBF, 10%);
+  }
+
   ul {
     text-decoration: none;
     padding-left: 5%;

@@ -17,6 +17,10 @@
   border-style: none;
 }
 
+a:hover {
+  color: lighten(gray, 10%);
+}
+
 .footer {
   position: absolute;
   bottom: 10;
@@ -25,9 +29,15 @@
 
   a {
     color: gray;
+    border-bottom: 1px lighten(gray, 20%) dotted;
+  }
+
+  a:hover {
+    color: lighten(gray, 10%); 
   }
 
   p {
+    color: lighten(gray, 5%);
     float: right;
     right: 10;
     margin-bottom: 0;
