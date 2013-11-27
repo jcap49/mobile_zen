@@ -70,7 +70,7 @@ class TextMessagesController < ApplicationController
         )    
     end
 
-    def send_account_deletion_message(phone)
+    def send_account_deletion_message(phone_number)
       set_twilio_client
       @twilio_client.account.sms.messages.create(
         from: TextMessage::TWILIO_PHONE_NUMBER,
