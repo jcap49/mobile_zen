@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
     TextMessage.execute_text_message_worker(text_message.id, text_message.send_time, text_message.user_id)
   end
 
-  def self.cancel_account(user_id)
+  def self.destroy(user_id)
     user = User.find_by_id(user_id)
     user.destroy
   end

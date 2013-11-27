@@ -38,10 +38,11 @@ class TextMessage < ActiveRecord::Base
     iron_worker.schedules_cancel(schedule_id)
   end
 
-  # add in after_destroy callback
   def self.destroy(phone_number)
     text_message = TextMessage.find_by_phone_number(phone_number)
     TextMessage.cancel_worker(text_message.schedule_id)
-    User.cancel_account(text_message.user_id)
+    User.destroy(text_message.user_id)
+    sleep 15
+    text_message.destroy
   end
 end
