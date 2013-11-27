@@ -10,7 +10,7 @@ class TextMessage < ActiveRecord::Base
 
   # Twilio & SMS-related constants
   TWILIO_PHONE_NUMBER = '+13152353586'
-  UNREGISTERED_WELCOME = "Hey there - welcome to Bonsai! Please reply with 'YES' to ensure your daily question is delivered on time."
+  UNREGISTERED_WELCOME = "Hey there - welcome to Bonsai! Please reply with 'YES' to ensure your daily question or comment is delivered on time."
   REGISTERED_WELCOME = "Hey there - welcome back to Bonsai! You're already opted into receiving your daily questions. Happy reflection!"
 
   def self.execute_text_message_worker(text_message_id, send_time, user_id)
