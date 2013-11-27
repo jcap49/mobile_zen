@@ -55,8 +55,10 @@ class TextMessagesController < ApplicationController
         User.update_registration(phone_number)
         render 'update_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'delete'
+        text_message = TextMessage.find_by_phone_number(phone_number)
         TextMessage.destroy(phone_number)
         render 'unsubscribe.xml.erb', content_type: 'text/xml'
+        text_message.destroy
       end   
     end
 

@@ -42,6 +42,6 @@ class TextMessage < ActiveRecord::Base
     text_message = TextMessage.find_by_phone_number(phone_number)
     TextMessage.cancel_worker(text_message.schedule_id)
     User.cancel_account(text_message.user_id)
-    # @text_message.destroy
+    text_message.destroy
   end
 end
