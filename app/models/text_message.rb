@@ -43,5 +43,6 @@ class TextMessage < ActiveRecord::Base
     text_message.update_attribute("active", false)
     TextMessage.cancel_worker(text_message.schedule_id)
     User.destroy(text_message.user_id)
+    # text_message.destroy
   end
 end
