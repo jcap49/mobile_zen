@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
 
   def self.cancel_account(user_id)
-    user = User.find_by_user_id(user_id)
+    user = User.find_by_id(user_id)
     user.destroy
   end
 end
