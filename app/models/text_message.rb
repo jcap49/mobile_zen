@@ -12,6 +12,7 @@ class TextMessage < ActiveRecord::Base
   TWILIO_PHONE_NUMBER = '+13152353586'
   UNREGISTERED_WELCOME = "Hey there - welcome to Bonsai! Please reply with 'YES' to ensure your daily question or comment is delivered on time."
   REGISTERED_WELCOME = "Hey there - welcome back to Bonsai! You're already opted into receiving your daily questions. Happy reflection!"
+  DELETE_ACCOUNT = "You've been successfully unsubscribed and your account has been deleted. Sorry to see you go!"
 
   def self.execute_text_message_worker(text_message_id, send_time, user_id)
     iron_worker = IronWorkerNG::Client.new
@@ -42,6 +43,6 @@ class TextMessage < ActiveRecord::Base
     text_message = TextMessage.find_by_phone_number(phone_number)
     TextMessage.cancel_worker(text_message.schedule_id)
     User.cancel_account(text_message.user_id)
-    
+    text_message.destroy    
   end
 end
