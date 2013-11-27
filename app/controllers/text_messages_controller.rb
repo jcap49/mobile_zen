@@ -56,7 +56,7 @@ class TextMessagesController < ApplicationController
         render 'update_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'delete'
         TextMessage.destroy(phone_number)
-        send_account_deletion_message(phone_number)
+        render 'unsubscribe.xml.erb', content_type: 'text/xml'
       end   
     end
 
@@ -68,15 +68,6 @@ class TextMessagesController < ApplicationController
         to: phone_number,
         body: TextMessage::REGISTERED_WELCOME 
         )    
-    end
-
-    def send_account_deletion_message(phone_number)
-      set_twilio_client
-      @twilio_client.account.sms.messages.create(
-        from: TextMessage::TWILIO_PHONE_NUMBER,
-        to: phone_number,
-        body: TextMessage::REGISTERED_WELCOME 
-        )
     end
 
     def sanitize_send_time(text_message)
