@@ -18,25 +18,10 @@
   %title= content_for?(:title) ? yield(:title) : "Bonsai"
   
   = stylesheet_link_tag "application"
-  = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,600,200italic,400italic|Bubblegum+Sans|Gochi+Hand|Titillium+Web:400,200,200italic,400italic,600"
   = javascript_include_tag "vendor/custom.modernizr"
   = csrf_meta_tag
 
 %body
-  #fb-root
-    / javascript for fb/twitter button
-
-  :javascript
-    (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=483104801760721";
-    fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-
   = display_flash_messages
   
   = yield
@@ -44,14 +29,4 @@
   = render 'layouts/footer'
 
   = javascript_include_tag "application"
-
-  / gosquared tracking
-  :javascript
-    
-     !function(g,s,q,r,d){r=g[r]=g[r]||function(){(r.q=r.q||[]).push(
-    arguments)};d=s.createElement(q);q=s.getElementsByTagName(q)[0];
-    d.src='//d1l6p2sc9645hc.cloudfront.net/tracker.js';q.parentNode.
-    insertBefore(d,q)}(window,document,'script','_gs');
-
-    _gs('GSN-263187-N');
-    
+ 
