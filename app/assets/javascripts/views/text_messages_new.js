@@ -18,7 +18,7 @@ MobileZen.Views.TextMessagesNew = Backbone.View.Extend({
 
   render: function() {
     this.$el.html(JST['text_messages/form_fields']());
-    this.$('input[name=title]').focus();
+    this.$('input[name=body]').focus();
     return this;
   },
 
