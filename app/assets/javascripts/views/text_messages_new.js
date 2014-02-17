@@ -1,6 +1,6 @@
 MobileZen.Views.TextMessagesNew = Backbone.View.Extend({
   // tagName: 'form',
-  // id: 'new-text-message',
+  id: 'new-text-message',
 
   events: {
     "submit": "save",

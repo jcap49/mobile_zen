@@ -6,14 +6,8 @@ MobileZen.Routers.TextMessages = Support.SwappingRouter.extend({
   },
 
   routes: {
-    "":                     "index",
     "new":                  "newTextMessage",
     "text_messages/:id":    "show"
-  },
-
-  index: function() {
-    var view = new MobileZen.Views.TextMessagesIndex({ collection: this.collection });
-    this.swap(view);
   },
 
   newTextMessage: function() {

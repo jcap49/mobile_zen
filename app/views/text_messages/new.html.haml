@@ -1,0 +1,76 @@
+.fb-like{data:{href:"https://bonsai1.herokuapp.com", width: "", height: "", colorscheme: "light", layout: "button_count", action:"like", send: "false"}}
+%a.twitter-share-button{data: {url: "http://www.heybonsai.com", related: "jcap49"}}
+
+#text_messages
+  .row#main_body
+    #login_container
+      -unless user_signed_in?
+        %button.tiny.secondary#login
+          =link_to 'Login', new_user_session_path
+      -if user_signed_in?
+        %button.tiny.secondary#logout
+          =link_to 'Logout', destroy_user_session_path, :method => "delete"
+    #landing_header
+      %h1.subheader#landing_title
+        Bonsai: Your Cause for Pause
+      %h3.subheader
+        A tool to help you find time for daily reflection.
+    #landing_main_info
+      -unless user_signed_in?
+        %p#slug_description
+          Life is busy. And life is often times more reactive than proactive. 
+          Bonsai is a simple tool for daily reflection, helping you make time for yourself. 
+          Delivered at a selected time, a text message greets you with a question 
+          or quotation of your choosing to reflect on. Take as long, or as little as you’d like.
+      -if user_signed_in? && current_user.max_text_message_limit?(current_user.id)
+        #text_limit
+          #current_text_info
+            %p
+              Your current text message reads 
+              %span
+                ="'#{@saved_text_message.text_body}'"
+              and will be sent daily to
+              %span
+                =@saved_text_message.phone_number
+              at 
+              %span
+                =@saved_text_message.send_time.strftime("%H:%M") + "."
+          %p#text_limit_message
+            Unfortunately there's a one text message limit per user at the moment. Feel free to reply with 'DELETE' to delete your current message - you can then create a new message of your choosing while logged in here.
+      -else  
+        #landing_form
+    -unless user_signed_in?
+      #landing_image
+        =image_tag 'bonsai1.jpg'
+  / beneath the fold
+  -unless user_signed_in?
+    #disclaimer
+      %blockquote#quote
+        “Life can only be understood backwards; but it must be lived forwards.” 
+        %i - Søren Kierkegaard
+      #disclaimer_content_column_float_left
+        %ul
+          %li.disclaimer_header One Text Message. One Reflection.
+          %li.disclaimer_content We believe reflection is most effective when it is simple. All you need to do to get started is a question or comment you would like to reflect on, a time of day you would like the message to be delivered, and a few bits of contact information. Each day, you'll receive the message, hopefully spend a few minutes positively reflecting, and then head off to conquer the world.
+        #disclaimer_image_float_right
+          =image_tag 'text_message.png', id: 'text_message_img'
+      #disclaimer_content_column_float_right 
+        #disclaimer_image_float_left
+          =image_tag 'lock.png', id: 'lock_img'
+        %ul 
+          %li.disclaimer_header Data Security.
+          / add link for privacy policy
+          %li.disclaimer_content= "Unlike the NSA, we take the security of personal information very seriously. All of your information (e.g. email, password, phone number) will be kept completely confidential. If you'd like further clarification on how we use any of this information, feel free to #{link_to 'get in touch', 'mailto:jcapecelatro@gmail.com'}.".html_safe  
+
+%script{type: "text/json", id: "foundation"}
+  {"text_messsages": =@text_messages.to_json, "users": =@users.to_json}
+
+= content_for :javascript do
+  %script{type: "text/javascript"}
+    $(function () {
+    var div = $('div></div>');
+    div.html($('#foundation').text());
+    var data = JSON.parse(div.text());
+
+    MobileZen.initialize(data);
+    });
