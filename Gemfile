@@ -17,6 +17,7 @@ gem 'iron_worker_ng'
 gem 'devise'
 gem 'localtunnel'
 gem 'backbone-on-rails'
+gem 'ejs'
 
 group :doc do
   gem 'sdoc', require: false

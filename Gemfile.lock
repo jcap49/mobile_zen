@@ -266,6 +266,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise
+  ejs
   factory_girl_rails
   figaro
   foundation_rails_helper

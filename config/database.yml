@@ -4,7 +4,7 @@ development:
   host: localhost
   database: mobile_zen_development
   pool: 5
-  username: johncapecelatro  
+  username: johncapecelatro
   password:
 
 test: &test
@@ -13,7 +13,7 @@ test: &test
   host: localhost
   database: mobile_zen_test
   pool: 5
-  username: johncapecelatro    
+  username: johncapecelatro
   password:
 
 production:
