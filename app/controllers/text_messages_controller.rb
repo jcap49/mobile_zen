@@ -1,7 +1,5 @@
 class TextMessagesController < ApplicationController
-
-  def index
-  end
+  respond_to :html, :haml, :json
 
   def new
     @text_message = TextMessage.new(params[:text_message])
@@ -10,14 +8,14 @@ class TextMessagesController < ApplicationController
     end
   end
 
-  def create  
+  def create
     @text_message = TextMessage.new(text_message_params)
     @text_message.user_id = -1
-    
+
     unless @text_message.send_time.nil?
       sanitize_send_time(@text_message)
     end
-    
+
     if user_signed_in? && @text_message.save
       @text_message.user_id = current_user.id
       @text_message.save
@@ -25,13 +23,13 @@ class TextMessagesController < ApplicationController
       send_registered_welcome_text_message(@text_message.phone_number)
       TextMessage.execute_text_message_worker(@text_message.id, @text_message.send_time, @text_message.user_id)
       redirect_to root_path, notice: "Great - you're all sorted."
-    elsif @text_message.save 
+    elsif @text_message.save
       session[:text_message_id] = @text_message.id
       redirect_to new_user_registration_path, notice: "Great - you'll just have to register for an account quickly."
     else
       render action: 'new', notice: "Whoops something went wrong - give it another go."
     end
-  end 
+  end
 
   def process_text_message
     parse_text_message_body(params[:Body], params[:From])
@@ -51,13 +49,13 @@ class TextMessagesController < ApplicationController
     end
 
     def parse_text_message_body(text_message_body, phone_number)
-      if text_message_body.downcase == 'yes' 
+      if text_message_body.downcase == 'yes'
         User.update_registration(phone_number)
         render 'update_registration.xml.erb', content_type: 'text/xml'
       elsif text_message_body.downcase == 'delete' || text_message_body == 'stop'
         TextMessage.cancel_account(phone_number)
         render 'unsubscribe.xml.erb', content_type: 'text/xml'
-      end   
+      end
     end
 
     # for previously registered users
@@ -66,8 +64,8 @@ class TextMessagesController < ApplicationController
       @twilio_client.account.sms.messages.create(
         from: TextMessage::TWILIO_PHONE_NUMBER,
         to: phone_number,
-        body: TextMessage::REGISTERED_WELCOME 
-        )    
+        body: TextMessage::REGISTERED_WELCOME
+        )
     end
 
     def sanitize_send_time(text_message)

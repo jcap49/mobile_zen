@@ -1,4 +1,4 @@
-window.MobileZen = {
+var MobileZen = {
   Models: {},
   Collections: {},
   Views: {},
